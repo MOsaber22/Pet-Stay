@@ -14,7 +14,6 @@ const Footer = () => {
   return (
     <footer className="bg-gray-100 border-t border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Left — Logo + tagline */}
         <div>
           <Link
             to="/"
@@ -31,7 +30,6 @@ const Footer = () => {
           </Typography>
         </div>
 
-        {/* Center — nav links */}
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-1">
           {FOOTER_LINKS.map((label) => (
             <span key={label} className="text-gray-500 text-sm cursor-default">
@@ -40,7 +38,6 @@ const Footer = () => {
           ))}
         </nav>
 
-        {/* Right — social icons */}
         <div className="flex items-center gap-2">
           <a
             target="_blank"
