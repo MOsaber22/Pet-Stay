@@ -1,14 +1,16 @@
-import AppRoutes from './routes/AppRoutes'
-import Footer from './components/Footer/Footer'
-import Header from './components/Header/Header'
-
+import { Route, Routes } from 'react-router-dom'
+import UserLayout from './Layout/User-Layout/UserLayout'
+import AdminLayout from './Layout//Admin-Layout/AdminLayout'
+import NotFound from './pages/Not-Found/NotFound'
 
 const App = () => {
   return (
     <>
-      <Header/>
-      <AppRoutes/>
-      <Footer/>
+      <Routes>
+        <Route path='/*' element={<UserLayout/>} />
+        <Route path='/admin/*' element={<AdminLayout/>} />
+        <Route path='*' element={<NotFound/>} />
+      </Routes>
     </>
   )
 }
