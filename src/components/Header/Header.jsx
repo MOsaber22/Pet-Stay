@@ -2,7 +2,6 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Navbar,
-  Collapse,
   IconButton,
   Button,
   Typography,
@@ -110,11 +109,11 @@ const Header = () => {
           </IconButton>
         </div>
       </div>
-      <Collapse open={open}>
+      {open && (
         <div className="max-w-6xl mx-auto pt-4 pb-2 border-t border-gray-100 mt-3">
           <NavList onClose={() => setOpen(false)} />
         </div>
-      </Collapse>
+      )}
     </Navbar>
   );
 };
