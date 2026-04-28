@@ -9,7 +9,7 @@ export default function AdminNavbar({ onMenu }) {
           <button
             onClick={onMenu}
             aria-label="Open menu"
-            className="lg:hidden p-2 rounded-xl text-primary hover:bg-primary-light transition-colors duration-300"
+            className="lg:hidden p-2 rounded-xl text-color-primary hover:bg-primary-light transition-colors duration-300"
           >
             <HiOutlineMenu className="text-2xl" />
           </button>
@@ -18,7 +18,7 @@ export default function AdminNavbar({ onMenu }) {
         <div>
           <button
             aria-label="Profile"
-            className="p-2 rounded-xl text-primary hover:bg-teal-primary transition-colors duration-300"
+            className="p-2 rounded-xl text-color-primary hover:bg-teal-primary transition-colors duration-300"
           >
             <FaRegUserCircle className="text-2xl" />
           </button>
