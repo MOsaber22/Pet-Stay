@@ -20,7 +20,7 @@ const AdminAllCats = () => {
       age: 1,
       owner: "ahmed",
       status: "Available",
-      image: "/public/unnamed (4).png",
+      image: "/unnamed (4).png",
       breed: "so beatifule cat",
       gender: 'male',
       location: 'cairo'
@@ -30,7 +30,7 @@ const AdminAllCats = () => {
       age: 1,
       owner: "ahmed",
       status: "Adopted",
-      image: "/public/unnamed (3).png",
+      image: "/unnamed (3).png",
       breed: "so beatifule cat",
       gender: 'male',
       location: 'cairo'
@@ -40,7 +40,7 @@ const AdminAllCats = () => {
       age: 1,
       owner: "ahmed",
       status: "Reserved",
-      image: "/public/unnamed (2).png",
+      image: "/unnamed (2).png",
       breed: "so beatifule cat",
       gender: 'male',
       location: 'cairo'
@@ -50,7 +50,7 @@ const AdminAllCats = () => {
       age: 1,
       owner: "ahmed",
       status: "Available",
-      image: "/public/unnamed (1).png",
+      image: "/unnamed (1).png",
       breed: "so beatifule cat",
       gender: 'male',
       location: 'cairo'
@@ -60,7 +60,7 @@ const AdminAllCats = () => {
       age: 1,
       owner: "ahmed",
       status: "Adopted",
-      image: "/public/unnamed (5).png",
+      image: "/unnamed (5).png",
       breed: "so beatifule cat",
       gender: 'male',
       location: 'cairo'

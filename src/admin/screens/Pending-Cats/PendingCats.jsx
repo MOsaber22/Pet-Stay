@@ -63,7 +63,7 @@ const PendingCats = () => {
             <div className="group flex flex-col md:flex-row md:justify-between justify-center items-start md:items-center my-3 gap-5 md:gap-3 lg:gap-10 w-full bg-gray-100 hover:bg-gray-300 transition-all duration-500 rounded-md py-3 px-3" key={index}>
               <div className="flex items-center gap-5">
                 <img
-                  src="/public/unnamed (4).png"
+                  src="/unnamed (4).png"
                   alt="cat image"
                   className="w-[70px] h-[70px] rounded-xl block group-hover:scale-110 transition-transform duration-700"
                 />
