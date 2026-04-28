@@ -1,5 +1,6 @@
 import { Button } from "@material-tailwind/react";
 import { useState } from "react";
+import { HiOutlineEye } from "react-icons/hi";
 
 const PendingCats = () => {
   const [cats] = useState([
@@ -50,7 +51,7 @@ const PendingCats = () => {
         <p className="text-color-primary uppercase text-xs font-semibold">
           Curation Pipeline
         </p>
-        <h1 className=" text-4xl md:text-5xl lg:text[3.5rem] leading-tight tracking-tight font-extrabold">
+        <h1 className=" text-5xl md:text-5xl lg:text[3.5rem] leading-tight tracking-tight font-bold">
           Pending <span className="text-color-primary">New Arrivals</span>
         </h1>
         <p className="text-lg text-gray-700">
@@ -82,9 +83,10 @@ const PendingCats = () => {
               </div>
               <div className="flex md:flex-col gap-3 text-center">
                 <p className="text-gray-700 text-md">Action</p>
-                <div className="flex items-center justify-evenly gap-3">
-                  <Button color="red" >Reject</Button>
-                  <Button color="green" >Approve</Button>
+                <div className="flex items-center justify-evenly gap-1 md:gap-3">
+                  <Button className="px-4 py-2 text-xl" color="yellow" ><HiOutlineEye/></Button>
+                  <Button className="px-4 py-2" color="red" >Reject</Button>
+                  <Button className="px-4 py-2" color="green" >Approve</Button>
                 </div>
               </div>
             </div>
