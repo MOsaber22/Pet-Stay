@@ -73,7 +73,7 @@ const AdminAllCats = () => {
           <p className="text-[11px] tracking-[0.2em] text-color-primary font-semibold">
             CATALOG
           </p>
-          <h1 className="font-display font-extrabold text-color-primary text-4xl sm:text-5xl tracking-tight leading-[1.05] mt-2">
+          <h1 className="font-display font-bold text-color-primary text-5xl sm:text-5xl tracking-tight leading-[1.05] mt-2">
             All Cats
           </h1>
           <p className="mt-3 text-gray-700 max-w-xl text-xl">
