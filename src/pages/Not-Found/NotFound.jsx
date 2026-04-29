@@ -17,7 +17,7 @@ const NotFound = () => {
 
           <div className="mb-10">
             <img
-              src="/public/unnamed (4).png"
+              src="/unnamed (4).png"
               alt="Lost cat"
               className="w-32 h-32 mx-auto rounded-full shadow-md"
             />
