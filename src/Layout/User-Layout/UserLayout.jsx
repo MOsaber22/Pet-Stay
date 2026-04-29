@@ -11,25 +11,28 @@ import AddNewCat from "../../pages/Cats/AddNewCat/AddNewCat";
 import AdoptRequest from "../../pages/Cats/AdoptRequest/AdoptRequest";
 import AllCats from "../../pages/Cats/AllCats/AllCats";
 import CatDetails from "../../pages/Cats/CatDetails/CatDetails";
+import ThemeChanger from "../../context/ThemeProvider";
 
 const UserLayout = () => {
   return (
-    <div>
-      <Header />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="user-profile" element={<UserProfile />} />
-        <Route path="add-new-cat" element={<AddNewCat />} />
-        <Route path="adopt-request" element={<AdoptRequest />} />
-        <Route path="allcats" element={<AllCats />} />
-        <Route path="catDetails" element={<CatDetails />} />
-      </Routes>
-      <Footer />
-    </div>
+    <ThemeChanger>
+      <div>
+        <Header />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="user-profile" element={<UserProfile />} />
+          <Route path="add-new-cat" element={<AddNewCat />} />
+          <Route path="adopt-request" element={<AdoptRequest />} />
+          <Route path="allcats" element={<AllCats />} />
+          <Route path="catDetails" element={<CatDetails />} />
+        </Routes>
+        <Footer />
+      </div>
+    </ThemeChanger>
   );
 };
 
