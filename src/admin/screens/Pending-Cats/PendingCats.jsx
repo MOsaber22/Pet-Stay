@@ -1,53 +1,39 @@
 import { Button } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlineEye } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const PendingCats = () => {
-  const [cats] = useState([
-    {
-      catName: "memo",
-      catAge: 1,
-      owner: "ahmed",
-      status: "pending",
-      image: "",
-      desc: "so beatifule cat",
-    },
-    {
-      catName: "memo",
-      catAge: 1,
-      owner: "ahmed",
-      status: "pending",
-      image: "",
-      desc: "so beatifule cat",
-    },
-    {
-      catName: "memo",
-      catAge: 1,
-      owner: "ahmed",
-      status: "pending",
-      image: "",
-      desc: "so beatifule cat",
-    },
-    {
-      catName: "memo",
-      catAge: 1,
-      owner: "ahmed",
-      status: "pending",
-      image: "",
-      desc: "so beatifule cat",
-    },
-    {
-      catName: "memo",
-      catAge: 1,
-      owner: "ahmed",
-      status: "pending",
-      image: "",
-      desc: "so beatifule cat",
-    },
-  ])
+  const [error, setError] = useState("");
+  const [pendingCats, setPendingCats] = useState([]);
+  const getPendingCats = async () => {
+    try {
+      setError("");
+      const url = import.meta.env.VITE_CATS;
+      const req = await fetch(`${url}/cats`);
+      const res = await req.json();
+      const pendingCats = res.filter((cat) => cat.status === "pending");
+      setPendingCats(pendingCats);
+    } catch (e) {
+      setError(e.message || "Failed to load pending cats. Please try again.");
+    }
+  };
+  
+  useEffect(() => {
+    getPendingCats();
+  },[]);
   return (
     <div>
-      <div className="flex flex-col justify-center gap-5 p-5 mb-5">
+      {error ? (
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="p-8 bg-red-50 border-2 border-red-400 text-red-700 rounded-lg max-w-md text-center">
+            <h2 className="text-2xl font-bold mb-3">Error</h2>
+            <p className="text-lg">{error}</p>
+          </div>
+        </div>
+      ) : (
+        <>
+        <div className="flex flex-col justify-center gap-5 p-5 mb-5">
         <p className="text-color-primary uppercase text-xs font-semibold">
           Curation Pipeline
         </p>
@@ -57,42 +43,61 @@ const PendingCats = () => {
         <p className="text-lg text-gray-700">
           Review new arrivals before they are listed in the catalog.
         </p>
-      </div>
+        </div>
       <div className="flex flex-col items-center justify-center">
-        {cats.map((cat, index) => {
+        {pendingCats.map((cat) => {
           return (
-            <div className="group flex flex-col md:flex-row md:justify-between justify-center items-start md:items-center my-3 gap-5 md:gap-3 lg:gap-10 w-full bg-gray-100 hover:bg-gray-300 transition-all duration-500 rounded-md py-3 px-3" key={index}>
+            <div
+              className="group flex flex-col md:flex-row md:justify-between justify-center items-start md:items-center my-3 gap-5 md:gap-3 lg:gap-10 w-full bg-gray-100 hover:bg-gray-300 transition-all duration-500 rounded-md py-3 px-3"
+              key={cat.id}
+            >
               <div className="flex items-center gap-5">
                 <img
-                  src="/unnamed (4).png"
+                  src={cat.image}
                   alt="cat image"
                   className="w-[70px] h-[70px] rounded-xl block group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="flex flex-col gap-1">
-                  <h2 className="text-lg font-bold text-color-primary">{cat.catName}</h2>
-                  <h2 className="text-sm text-gray-700">{cat.desc}</h2>
+                  <h2 className="text-lg font-bold text-color-primary">
+                    {cat.name}
+                  </h2>
+                  <h2 className="text-sm text-gray-700">{cat.breed}</h2>
                 </div>
               </div>
               <div className="flex md:flex-col justify-center items-center gap-4">
                 <p className="text-sm text-gray-700">Owner</p>
-                <h3 className=" text-lg font-semibold text-color-primary">{cat.owner}</h3>
+                <h3 className=" text-lg font-semibold text-color-primary">
+                  {cat.owner}
+                </h3>
               </div>
               <div className="flex md:flex-col justify-center items-center gap-4">
                 <p className="text-sm text-gray-700">Status</p>
-                <h3 className="text-md text-white font-semibold bg-deep-orange-200 rounded-xl px-2">{cat.status}</h3>
+                <h3 className="text-md text-white font-semibold bg-deep-orange-200 rounded-xl px-2">
+                  {cat.status}
+                </h3>
               </div>
               <div className="flex md:flex-col gap-3 text-center">
                 <p className="text-gray-700 text-md">Action</p>
                 <div className="flex items-center justify-evenly gap-1 md:gap-3">
-                  <Button className="px-4 py-2 text-xl" color="yellow" ><HiOutlineEye/></Button>
-                  <Button className="px-4 py-2" color="red" >Reject</Button>
-                  <Button className="px-4 py-2" color="green" >Approve</Button>
+                  <Link to={`/admin/cat-details/${cat.id}`}>
+                    <button  className="h-9 w-9 rounded-full bg-gray-800 hover:bg-gray-600 text-gray-100 hover:text-black flex items-center justify-center transition-colors duration-500">
+                      <HiOutlineEye/>
+                    </button>
+                  </Link> 
+                  <Button className="px-4 py-2" color="red">
+                    Reject
+                  </Button>
+                  <Button className="px-4 py-2" color="green">
+                    Approve
+                  </Button>
                 </div>
               </div>
             </div>
           );
         })}
       </div>
+        </>
+      )}
     </div>
   );
 };
