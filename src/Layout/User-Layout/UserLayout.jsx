@@ -12,6 +12,7 @@ import AdoptRequest from "../../pages/Cats/AdoptRequest/AdoptRequest";
 import AllCats from "../../pages/Cats/AllCats/AllCats";
 import CatDetails from "../../pages/Cats/CatDetails/CatDetails";
 import ThemeChanger from "../../context/ThemeProvider";
+import NotFound from "../../pages/Not-Found/NotFound";
 
 const UserLayout = () => {
   return (
@@ -29,6 +30,7 @@ const UserLayout = () => {
           <Route path="adopt-request" element={<AdoptRequest />} />
           <Route path="allcats" element={<AllCats />} />
           <Route path="catDetails" element={<CatDetails />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
