@@ -8,20 +8,55 @@ const PendingCats = () => {
   const [pendingCats, setPendingCats] = useState([]);
   const getPendingCats = async () => {
     try {
-      setError("");
       const url = import.meta.env.VITE_CATS;
       const req = await fetch(`${url}/cats`);
       const res = await req.json();
       const pendingCats = res.filter((cat) => cat.status === "pending");
       setPendingCats(pendingCats);
     } catch (e) {
-      setError(e.message || "Failed to load pending cats. Please try again.");
+      setError(`Failed to load pending cats. Please try again. ${e.message}`);
     }
   };
   
+  const reject = async (index) => {
+    try{
+      const url = import.meta.env.VITE_CATS;
+      const cat = pendingCats[index];
+      await fetch(`${url}/cats/${cat.id}`,{
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({...cat,status: "rejected"})
+      });
+      const newPendingCats = [...pendingCats];
+      newPendingCats.splice(index,1);
+      setPendingCats(newPendingCats);
+    }
+    catch(e){
+      setError(`Failed to reject cat. Please try again. ${e.message}`);
+    }
+  }
+  const approve = async (index) => {
+    try{
+      const url = import.meta.env.VITE_CATS;
+      const cat = pendingCats[index];
+      await fetch(`${url}/cats/${cat.id}`,{
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({...cat,status: "available"})
+      });
+      const newPendingCats = [...pendingCats];
+      newPendingCats.splice(index,1);
+      setPendingCats(newPendingCats);
+    }
+    catch(e){
+      setError(`Failed to reject cat. Please try again. ${e.message}`);
+    }
+  }
+
   useEffect(() => {
     getPendingCats();
   },[]);
+  
   return (
     <div>
       {error ? (
@@ -45,7 +80,7 @@ const PendingCats = () => {
         </p>
         </div>
       <div className="flex flex-col items-center justify-center">
-        {pendingCats.map((cat) => {
+        {pendingCats.map((cat,index) => {
           return (
             <div
               className="group flex flex-col md:flex-row md:justify-between justify-center items-start md:items-center my-3 gap-5 md:gap-3 lg:gap-10 w-full bg-gray-100 hover:bg-gray-300 transition-all duration-500 rounded-md py-3 px-3"
@@ -84,10 +119,10 @@ const PendingCats = () => {
                       <HiOutlineEye/>
                     </button>
                   </Link> 
-                  <Button className="px-4 py-2" color="red">
+                  <Button onClick={() => reject(index)} className="px-4 py-2" color="red">
                     Reject
                   </Button>
-                  <Button className="px-4 py-2" color="green">
+                  <Button onClick={() => approve(index)} className="px-4 py-2" color="green">
                     Approve
                   </Button>
                 </div>
