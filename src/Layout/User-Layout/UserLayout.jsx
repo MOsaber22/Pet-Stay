@@ -29,7 +29,7 @@ const UserLayout = () => {
           <Route path="add-new-cat" element={<AddNewCat />} />
           <Route path="adopt-request" element={<AdoptRequest />} />
           <Route path="all-cats" element={<AllCats />} />
-          <Route path="catDetails" element={<CatDetails />} />
+          <Route path="catDetails/:id" element={<CatDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

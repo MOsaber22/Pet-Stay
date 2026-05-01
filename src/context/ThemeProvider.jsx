@@ -2,7 +2,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeContext = createContext();
 const ThemeChanger = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(
+    localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ? "dark"
+      : "light"
+  );
   const changeTheme = () => {
     setTheme(() => (theme === "light" ? "dark" : "light"));
   };

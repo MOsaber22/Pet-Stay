@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaPaw, FaPlus } from "react-icons/fa";
+import { FaPaw, FaPlus, FaMapMarkerAlt } from "react-icons/fa";
 
 const AllCats = () => {
   const [cats, setCats] = useState([]);
@@ -125,68 +125,60 @@ const AllCats = () => {
 
           <main className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {cats.map((cat) => (
-                <div
-                  key={cat.id}
-                  className="bg-white dark:bg-gray-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700 group flex flex-col"
-                >
-                  <div className="relative h-64 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-                    <img
-                      src={cat.image}
-                      alt={cat.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 dark:text-teal-400">
-                      {cat.status || "Available"}
+              {cats.map(
+                ({
+                  id,
+                  story,
+                  image,
+                  name,
+                  status,
+                  gender,
+                  breed,
+                  lifeStage,
+                }) => (
+                  <div
+                    key={id}
+                    className="bg-white dark:bg-gray-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700 group flex flex-col"
+                  >
+                    <div className="relative h-64 bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                      <img
+                        src={image}
+                        alt={name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 dark:text-teal-400">
+                        {status || "Available"}
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-2xl font-extrabold text-black dark:text-white">
-                        {cat.name}
-                      </h3>
-                      <span className="text-sm font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
-                        {cat.gender}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                      {cat.breed} • {cat.lifeStage}
-                    </p>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="text-2xl font-extrabold text-black dark:text-white">
+                          {name}
+                        </h3>
+                        <span className="text-sm font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+                          {gender}
+                        </span>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        {story}
+                      </p>
 
-                    <div className="flex items-center justify-between mt-auto pt-5 border-t border-gray-100 dark:border-gray-700">
-                      <span className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                      <div className="flex items-center justify-between mt-auto pt-5 border-t border-gray-100 dark:border-gray-700">
+                        <span className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                          <FaMapMarkerAlt className="h-4 w-4" />
+                          {cats.location || "Cairo"}
+                        </span>
+                        <Link
+                          to={`/catDetails/${id}`}
+                          className="bg-teal-50 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 hover:bg-teal-500 hover:text-white dark:hover:bg-teal-500 dark:hover:text-white px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-sm flex items-center gap-2"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                        Shelter
-                      </span>
-                      <Link
-                        to="/catDetails"
-                        className="bg-teal-50 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 hover:bg-teal-500 hover:text-white dark:hover:bg-teal-500 dark:hover:text-white px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-sm flex items-center gap-2"
-                      >
-                        Meet {cat.name} <FaPaw size={14} />
-                      </Link>
+                          Meet {name} <FaPaw size={14} />
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ),
+              )}
             </div>
           </main>
         </div>
