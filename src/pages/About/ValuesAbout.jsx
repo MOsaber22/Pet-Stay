@@ -25,8 +25,8 @@ const Values = () => {
   ];
   return (
     <>
-      <section className="bg-gray-50 dark:bg-transparent py-20 px-6 transition-colors duration-300">
-        <div className="max-w-6xl mx-auto">
+      <section className="bg-gray-50 dark:bg-transparent py-20 transition-colors duration-300">
+        <div className="w-full mx-auto px-6 md:px-10 lg:px-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold text-black dark:text-white">
               Values that guide us

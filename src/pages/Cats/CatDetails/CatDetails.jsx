@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   FaArrowLeft,
@@ -39,7 +39,7 @@ const CatDetails = () => {
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen pt-10 pb-20 transition-colors duration-300">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8">
         <Link
           to="/all-cats"
           className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors mb-8 font-medium"
@@ -47,8 +47,8 @@ const CatDetails = () => {
           <FaArrowLeft /> Back to Friends
         </Link>
 
-        <div className="bg-white dark:bg-gray-800 rounded-[2.5rem] overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row">
-          <div className="md:w-1/2 relative h-[400px] md:h-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-3xl md:rounded-[2.5rem] overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row">
+          <div className="md:w-1/2 relative h-72 sm:h-80 md:h-auto">
             <img
               src={cat.image}
               alt={cat.name}
@@ -59,7 +59,7 @@ const CatDetails = () => {
             </div>
           </div>
 
-          <div className="md:w-1/2 p-8 md:p-12 flex flex-col">
+          <div className="md:w-1/2 p-6 md:p-12 flex flex-col">
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h1 className="text-4xl md:text-5xl font-extrabold text-black dark:text-white capitalize mb-2">
