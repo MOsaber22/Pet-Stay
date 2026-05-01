@@ -3,7 +3,7 @@ import { FaPaw } from "react-icons/fa";
 import { MdEmail, MdLanguage } from "react-icons/md";
 import { Typography } from "@material-tailwind/react";
 
-const FOOTER_LINKS = [
+const footerLinks = [
   "Privacy Policy",
   "Terms of Service",
   "Volunteer",
@@ -25,13 +25,17 @@ const Footer = () => {
             </span>
           </Link>
           <Typography className="text-gray-500 dark:text-gray-400 text-xs mt-1">
-            © {new Date().getFullYear()} PetStay. Curating companionship with soul.
+            © {new Date().getFullYear()} PetStay. Curating companionship with
+            soul.
           </Typography>
         </div>
 
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 w-full md:w-auto">
-          {FOOTER_LINKS.map((label) => (
-            <span key={label} className="text-gray-500 dark:text-gray-400 hover:dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 text-sm cursor-pointer transition-colors">
+          {footerLinks.map((label) => (
+            <span
+              key={label}
+              className="text-gray-500 dark:text-gray-400 hover:dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 text-sm cursor-pointer transition-colors"
+            >
               {label}
             </span>
           ))}
