@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import UserLayout from "./Layout/User-Layout/UserLayout";
-import AdminLayout from "./Layout//Admin-Layout/AdminLayout";
+import AdminLayout from "./Layout/Admin-Layout/AdminLayout";
 import NotFound from "./pages/Not-Found/NotFound";
 import ThemeChanger from "./context/ThemeProvider";
 
