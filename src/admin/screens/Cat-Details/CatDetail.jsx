@@ -21,13 +21,12 @@ const CatDetail = () => {
 
   const getViewedCat = async () => {
       try {
-        setError("");
         const url = import.meta.env.VITE_CATS;
         const req = await fetch(`${url}/cats/${catID}`);
         const res = await req.json();
         setVeiwedCat(res);
       } catch (e) {
-        setError(e.message || "Failed to load cat details. Please try again.");
+        setError(`Failed to load cat details. Please try again. ${e.message}`);
       }
     };
 

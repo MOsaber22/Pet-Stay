@@ -20,14 +20,13 @@ const AdminAllCats = () => {
   const [allCats, setAllCats] = useState([]);
   const getAllCats = async () => {
     try {
-      setError("");
       const url = import.meta.env.VITE_CATS;
       const req = await fetch(`${url}/cats`);
       const res = await req.json();
       const cats = res.filter((cat) => cat.status !== "pending");
       setAllCats(cats);
     } catch (e) {
-      setError(e.message || "Failed to load cats. Please try again.");
+      setError(`Failed to load cats. Please try again. ${e.message}`);
     }
   };
 

@@ -10,6 +10,8 @@ const links = [
   { to: "/admin", label: "Overview", icon: HiOutlineViewGrid, end: true },
   { to: "/admin/pending-cats", label: "Pending Cats", icon: HiOutlineClipboardList },
   { to: "/admin/all-cats", label: "All Cats", icon: FaPaw },
+  { to: "/admin/users", label: "Users", icon: FaUserFriends },
+  { to: "/admin/adoption-requests", label: "Requests", icon: FaRegCommentDots },
 ];
 
 export default function AdminSidebar({ onNavigate }) {
