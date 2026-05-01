@@ -9,10 +9,10 @@ const AdoptionRequest = () => {
   return (
   <div className="w-full bg-[#f6f8f7] px-4 sm:px-6 lg:px-8 py-2 flex-1">
       
-      {/* Top bar */}
+    
       <div className="flex items-center justify-between mb-6">
         
-        {/* Search */}
+      
         <div className="w-full max-w-xl relative">
           <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
           <input
