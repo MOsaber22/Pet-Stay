@@ -18,7 +18,7 @@ const navLinks = [
 ];
 
 const NavList = ({ onClose }) => (
-  <ul className="flex flex-col md:flex-row md:items-center gap-1 md:gap-6">
+  <ul className="flex flex-col md:flex-row md:items-center gap-1 md:gap-8">
     {navLinks.map(({ label, to }) => (
       <li key={to}>
         <NavLink
@@ -26,14 +26,18 @@ const NavList = ({ onClose }) => (
           end={to === "/"}
           onClick={onClose}
           className={({ isActive }) =>
-            `block text-sm font-semibold px-2 py-1 rounded transition-colors duration-150 ${
+            `block text-sm md:text-base font-semibold px-2 py-1 rounded transition-colors duration-150 ${
               isActive
                 ? "text-teal-600 dark:text-teal-400 border-b-2 border-teal-500 dark:border-teal-400"
                 : "text-black dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400"
             }`
           }
         >
-          <Typography as="span" variant="small" className="font-semibold">
+          <Typography
+            as="span"
+            variant="small"
+            className="font-semibold md:text-base"
+          >
             {label}
           </Typography>
         </NavLink>
@@ -48,15 +52,15 @@ const Header = () => {
 
   return (
     <Navbar
-      className="sticky top-0 z-50 max-w-full bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 rounded-none shadow-sm px-6 py-3 transition-colors duration-300"
+      className="sticky top-0 z-50 max-w-full bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 rounded-none shadow-sm px-6 py-3 md:py-5 transition-colors duration-300"
       shadow={false}
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <NavLink
           to="/"
-          className="flex items-center gap-2 text-teal-600 font-extrabold text-xl"
+          className="flex items-center gap-2 text-teal-600 font-extrabold text-xl md:text-2xl"
         >
-          <FaPaw size={20} />
+          <FaPaw size={20} className="md:w-6 md:h-6" />
           <span>
             Pet<span className="text-gray-800 dark:text-gray-200">Stay</span>
           </span>
@@ -76,18 +80,18 @@ const Header = () => {
             <Button
               variant="text"
               size="sm"
-              className="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 normal-case font-semibold"
+              className="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 normal-case font-semibold md:text-base"
             >
               <CgProfile
                 className="text-teal-500 hover:  dark:text-white"
-                fontSize={25}
+                fontSize={28}
               />
             </Button>
           </NavLink>
           <NavLink to="/register">
             <Button
               size="sm"
-              className="bg-teal-500 hover:bg-teal-600 shadow-none hover:shadow-none normal-case font-semibold rounded-full px-5"
+              className="bg-teal-500 hover:bg-teal-600 shadow-none hover:shadow-none normal-case font-semibold rounded-full px-5 md:px-6 md:py-2.5 md:text-base"
             >
               Adopt Now
             </Button>
