@@ -49,7 +49,7 @@ const PendingCats = () => {
       setPendingCats(newPendingCats);
     }
     catch(e){
-      setError(`Failed to reject cat. Please try again. ${e.message}`);
+      setError(`Failed to approve cat. Please try again. ${e.message}`);
     }
   }
 

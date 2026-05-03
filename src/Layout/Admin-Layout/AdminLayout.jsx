@@ -6,7 +6,10 @@ import NotFound from "../../pages/Not-Found/NotFound";
 import { useState } from "react";
 import AdminSidebar from "../../admin/components/Admin-Navbar/AdminSidebar";
 import AdminNavbar from "../../admin/components/NavBar/AdminNavbar";
+import Users from "../../admin/screens/Users/Users";
+import AdoptRequest from "../../admin/screens/AdoptionRequest/AdoptionRequest";
 import CatDetail from "../../admin/screens/Cat-Details/CatDetail";
+
 
 const AdminLayout = () => {
   const [open, setOpen] = useState(false);
@@ -38,8 +41,11 @@ const AdminLayout = () => {
               <Route index element={<Overview />} />
               <Route path="pending-cats" element={<PendingCats />} />
               <Route path="all-cats" element={<AdminAllCats />} />
+              <Route path="users" element={<Users />} />
+              <Route path="adoption-requests" element={<AdoptRequest />} />
               <Route path="cat-details/:catID" element={<CatDetail />} />
               <Route path="*" element={<NotFound />} />
+
             </Routes>
           </main>
         </div>
