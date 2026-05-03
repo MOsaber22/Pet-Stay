@@ -5,6 +5,8 @@ import NotFound from "./pages/Not-Found/NotFound";
 import ThemeChanger from "./context/ThemeProvider";
 
 const App = () => {
+
+
   return (
     <>
       <ThemeChanger>
