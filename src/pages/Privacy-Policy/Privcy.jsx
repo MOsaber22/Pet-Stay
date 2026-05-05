@@ -184,7 +184,6 @@ function Privacy() {
                   {s.title}
                 </h2>
               </div>
-
               {s.content}
             </section>
           );
