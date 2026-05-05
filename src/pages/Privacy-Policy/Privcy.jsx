@@ -15,7 +15,7 @@ import {
 } from "react-icons/hi2";
 
 const CheckItem = ({ children }) => (
-  <div className="flex items-start gap-2 text-gray-600 text-base hover:translate-x-1 transition">
+  <div className="flex items-start gap-2 text-gray-600 text-base hover:translate-x-1 transition hover:text-gray-900">
     <span className="text-teal-600 text-lg">✔</span>
     {children}
   </div>
@@ -176,15 +176,14 @@ function Privacy() {
                   {s.number}
                 </span>
 
-                <div className="bg-teal-100 p-2.5 rounded-full group-hover:bg-teal-200 transition">
+                <div className="bg-teal-100 p-2.5 rounded-full group-hover:bg-teal-200 transition all">
                   <Icon className="w-5 h-5 text-teal-600" />
                 </div>
 
-                <h2 className="text-lg font-bold text-gray-900 tracking-tight">
+                <h2 className="text-lg font-bold text-gray-900 ">
                   {s.title}
                 </h2>
               </div>
-
               {s.content}
             </section>
           );

@@ -12,8 +12,12 @@ import {
 } from "react-icons/hi2";
 import { GoLaw } from "react-icons/go";
 
-const Check = () => (
-  <HiCheckCircle className="w-5 h-5 text-teal-500 mt-1 shrink-0" />
+
+const CheckItem = ({ children }) => (
+  <div className="flex items-start gap-2 text-gray-600 text-base transition-all duration-300 hover:translate-x-1.5 hover:text-gray-900">
+    <HiCheckCircle className="w-5 h-5 text-teal-500 mt-1 shrink-0" />
+    {children}
+  </div>
 );
 
 const sections = [
@@ -23,15 +27,12 @@ const sections = [
     icon: HiOutlineDocumentText,
     title: "Introduction",
     content: (
-      <div className="space-y-3 text-gray-600 text-base leading-relaxed">
+      <div className="space-y-3">
         <p className="text-gray-900 font-medium">
           Welcome to PetStay Terms of Service.
         </p>
-
-        <ul className="space-y-3">
-          <li className="flex gap-2"><Check /> By using PetStay you agree to these terms</li>
-          <li className="flex gap-2"><Check /> These rules ensure safety for users and pets</li>
-        </ul>
+        <CheckItem>By using PetStay you agree to these terms</CheckItem>
+        <CheckItem>These rules ensure safety for users and pets</CheckItem>
       </div>
     ),
   },
@@ -42,11 +43,11 @@ const sections = [
     icon: HiOutlineUser,
     title: "Eligibility",
     content: (
-      <ul className="space-y-3 text-gray-600 leading-relaxed">
-        <li className="flex gap-2"><Check /> Must be at least 13 years old</li>
-        <li className="flex gap-2"><Check /> Provide accurate personal information</li>
-        <li className="flex gap-2"><Check /> You are responsible for your account</li>
-      </ul>
+      <div className="space-y-3">
+        <CheckItem>Must be at least 13 years old</CheckItem>
+        <CheckItem>Provide accurate personal information</CheckItem>
+        <CheckItem>You are responsible for your account</CheckItem>
+      </div>
     ),
   },
 
@@ -57,15 +58,13 @@ const sections = [
     title: "User Responsibilities",
     content: (
       <div className="space-y-3">
-        <div className="bg-teal-50 hover:bg-teal-100 transition hover:shadow-lg border border-teal-200 rounded-xl p-4 text-teal-800 text-sm font-medium">
+        <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-teal-800 text-sm font-medium">
           Use PetStay respectfully and ethically at all times.
         </div>
 
-        <ul className="space-y-3 text-gray-600 leading-relaxed">
-          <li className="flex gap-2"><Check /> No fake or misleading content</li>
-          <li className="flex gap-2"><Check /> Respect all users</li>
-          <li className="flex gap-2"><Check /> No illegal activity</li>
-        </ul>
+        <CheckItem>No fake or misleading content</CheckItem>
+        <CheckItem>Respect all users</CheckItem>
+        <CheckItem>No illegal activity</CheckItem>
       </div>
     ),
   },
@@ -76,11 +75,11 @@ const sections = [
     icon: HiOutlineHeart,
     title: "Pet Adoption Rules",
     content: (
-      <ul className="space-y-3 text-gray-600 leading-relaxed">
-        <li className="flex gap-2"><Check /> Adoption is not guaranteed</li>
-        <li className="flex gap-2"><Check /> Final decision is by owner or shelter</li>
-        <li className="flex gap-2"><Check /> We are not responsible after adoption</li>
-      </ul>
+      <div className="space-y-3">
+        <CheckItem>Adoption is not guaranteed</CheckItem>
+        <CheckItem>Final decision is by owner or shelter</CheckItem>
+        <CheckItem>We are not responsible after adoption</CheckItem>
+      </div>
     ),
   },
 
@@ -90,12 +89,12 @@ const sections = [
     icon: HiOutlineXCircle,
     title: "Prohibited Activities",
     content: (
-      <ul className="space-y-3 text-gray-600 leading-relaxed">
-        <li className="flex gap-2"><Check /> Fake accounts or impersonation</li>
-        <li className="flex gap-2"><Check /> Spam or advertisements</li>
-        <li className="flex gap-2"><Check /> Harmful animal content</li>
-        <li className="flex gap-2"><Check /> Attempting to hack system</li>
-      </ul>
+      <div className="space-y-3">
+        <CheckItem>Fake accounts or impersonation</CheckItem>
+        <CheckItem>Spam or advertisements</CheckItem>
+        <CheckItem>Harmful animal content</CheckItem>
+        <CheckItem>Attempting to hack system</CheckItem>
+      </div>
     ),
   },
 
@@ -105,11 +104,11 @@ const sections = [
     icon: HiOutlineExclamationTriangle,
     title: "Limitation of Liability",
     content: (
-      <ul className="space-y-3 text-gray-600 leading-relaxed">
-        <li className="flex gap-2"><Check /> No guarantee of adoption outcomes</li>
-        <li className="flex gap-2"><Check /> No responsibility for user interactions</li>
-        <li className="flex gap-2"><Check /> No liability for misuse or damage</li>
-      </ul>
+      <div className="space-y-3">
+        <CheckItem>No guarantee of adoption outcomes</CheckItem>
+        <CheckItem>No responsibility for user interactions</CheckItem>
+        <CheckItem>No liability for misuse or damage</CheckItem>
+      </div>
     ),
   },
 
@@ -120,13 +119,11 @@ const sections = [
     title: "Changes to Terms",
     content: (
       <div className="space-y-3">
-        <div className="bg-yellow-50  border border-yellow-200 rounded-xl p-4 text-yellow-800 text-sm">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-yellow-800 text-sm">
           These terms may be updated at any time without prior notice.
         </div>
 
-        <ul className="space-y-3 text-gray-600 leading-relaxed">
-          <li className="flex gap-2"><Check /> Continued use means acceptance of updates</li>
-        </ul>
+        <CheckItem>Continued use means acceptance of updates</CheckItem>
       </div>
     ),
   },
@@ -135,14 +132,20 @@ const sections = [
 function Terms() {
   return (
     <div className="bg-white min-h-screen">
+
       <section className="py-24 bg-gradient-to-br from-teal-50 to-white text-center">
         <GoLaw className="mx-auto w-10 h-10 text-teal-600 mb-4" />
+
         <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">
           Terms <span className="text-teal-600">of Service</span>
         </h1>
+
         <div className="w-16 h-1 bg-teal-600 mx-auto mt-4 rounded"></div>
+
         <p className="text-gray-600 mt-4 text-base max-w-xl mx-auto">
-          Clear, simple rules that keep <span className="text-teal-600 font-bold">Pet</span><span className="font-bold">Stay</span> safe and trustworthy for everyone.
+          Clear, simple rules that keep{" "}
+          <span className="text-teal-600 font-bold">Pet</span>
+          <span className="font-bold">Stay</span> safe and trustworthy for everyone.
         </p>
       </section>
 
@@ -156,17 +159,17 @@ function Terms() {
               id={s.id}
               className="group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
             >
-              
               <div className="flex items-center gap-4 mb-4">
+
                 <span className="text-xs bg-teal-600 text-white font-bold rounded-full px-2 py-1 shadow-sm">
                   {s.number}
                 </span>
 
-              <div className="bg-teal-100 p-2 rounded-full transition-all duration-300 group-hover:bg-teal-200 ">
-                <Icon className="w-5 h-5 text-teal-600 transition-colors duration-300 group-hover:text-teal-700" />
-              </div>
+                <div className="bg-teal-100 p-2 rounded-full transition-all duration-300 group-hover:bg-teal-200">
+                  <Icon className="w-5 h-5 text-teal-600 transition-colors duration-300 group-hover:text-teal-700" />
+                </div>
 
-                <h2 className="text-lg font-bold text-gray-900 tracking-tight">
+                <h2 className="text-lg font-bold text-gray-900">
                   {s.title}
                 </h2>
               </div>
@@ -176,7 +179,7 @@ function Terms() {
           );
         })}
 
-          <section className="bg-teal-50 border border-teal-200 shadow-sm rounded-2xl p-8 text-center">
+        <section className="bg-teal-50 border border-teal-200 shadow-sm rounded-2xl p-8 text-center">
           <HiOutlineEnvelope className="mx-auto w-6 h-6 text-teal-600 mb-3" />
 
           <h2 className="text-lg font-bold text-gray-900 mb-2">
@@ -189,7 +192,7 @@ function Terms() {
 
           <Link
             to="/contact"
-            className="bg-teal-600 hover:bg-teal-700 active:scale-95 transition-all text-white px-6 py-2 rounded-full text-sm font-medium "
+            className="bg-teal-600 hover:bg-teal-700 active:scale-95 transition-all text-white px-6 py-2 rounded-full text-sm font-medium"
           >
             Contact Support
           </Link>
@@ -198,4 +201,5 @@ function Terms() {
     </div>
   );
 }
-export default Terms
+
+export default Terms;
