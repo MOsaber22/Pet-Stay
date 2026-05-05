@@ -167,7 +167,7 @@ const AdoptRequest = () => {
                     </Typography>
                     <input
                       type="email"
-                      placeholder="jane@example.com"
+                      placeholder="jane@gmail.com"
                       className="w-full bg-[#e2e8f0] border-none rounded-xl px-4 py-3 text-gray-800 focus:ring-2 focus:ring-teal-500 outline-none"
                     />
                   </div>
