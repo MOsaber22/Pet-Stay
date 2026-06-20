@@ -81,64 +81,64 @@ const CatDetail = () => {
               <h1 className="font-display font-bold text-teal-800 text-4xl sm:text-6xl tracking-tight leading-[1]">
                 {viewedCat.name}
               </h1>
-              <p className="mt-3 italic text-gray-800">
+              <p className="mt-3 italic text-gray-800 dark:text-gray-200">
                 "A gentle soul looking for a sun-drenched windowsill."
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
-                <div className="flex flex-col gap-3 bg-gray-200 rounded-xl p-5">
-                  <p className="text-color-primary font-bold text-md uppercase">
+                <div className="flex flex-col gap-3 bg-gray-200 dark:bg-gray-800 rounded-xl p-5">
+                  <p className="text-color-primary dark:text-teal-400 font-bold text-md uppercase">
                     Name
                   </p>
-                  <h3 className="text-black text-lg font-bold">
+                  <h3 className="text-black dark:text-gray-200 text-lg font-bold">
                     {viewedCat.name}
                   </h3>
                 </div>
-                <div className="flex flex-col gap-3 bg-gray-200 rounded-xl p-5">
-                  <p className="text-color-primary font-bold text-md uppercase">
+                <div className="flex flex-col gap-3 bg-gray-200 dark:bg-gray-800 rounded-xl p-5">
+                  <p className="text-color-primary dark:text-teal-400 font-bold text-md uppercase">
                     age
                   </p>
-                  <h3 className="text-black text-lg font-bold">
+                  <h3 className="text-black dark:text-gray-200 text-lg font-bold">
                     {viewedCat.age}
                   </h3>
                 </div>
-                <div className="flex flex-col gap-3 bg-gray-200 rounded-xl p-5">
-                  <p className="text-color-primary font-bold text-md uppercase">
+                <div className="flex flex-col gap-3 bg-gray-200 dark:bg-gray-800 rounded-xl p-5">
+                  <p className="text-color-primary dark:text-teal-400 font-bold text-md uppercase">
                     gender
                   </p>
-                  <h3 className="text-black text-lg font-bold">
+                  <h3 className="text-black dark:text-gray-200 text-lg font-bold">
                     {viewedCat.gender}
                   </h3>
                 </div>
-                <div className="flex flex-col gap-3 bg-gray-200 rounded-xl p-5">
-                  <p className="text-color-primary font-bold text-md uppercase">
+                <div className="flex flex-col gap-3 bg-gray-200 dark:bg-gray-800 rounded-xl p-5">
+                  <p className="text-color-primary dark:text-teal-400 font-bold text-md uppercase">
                     breed
                   </p>
-                  <h3 className="text-black text-lg font-bold">
+                  <h3 className="text-black dark:text-gray-200 text-lg font-bold">
                     {viewedCat.breed}
                   </h3>
                 </div>
-                <div className="flex flex-col gap-3 bg-gray-200 rounded-xl p-5">
-                  <p className="text-color-primary font-bold text-md uppercase">
+                <div className="flex flex-col gap-3 bg-gray-200 dark:bg-gray-800 rounded-xl p-5">
+                  <p className="text-color-primary dark:text-teal-400 font-bold text-md uppercase">
                     owner
                   </p>
-                  <h3 className="text-black text-lg font-bold">
+                  <h3 className="text-black dark:text-gray-200 text-lg font-bold">
                     {viewedCat.owner}
                   </h3>
                 </div>
-                <div className="flex flex-col gap-3 bg-gray-200 rounded-xl p-5">
-                  <p className="text-color-primary font-bold text-md uppercase">
+                <div className="flex flex-col gap-3 bg-gray-200 dark:bg-gray-800 rounded-xl p-5">
+                  <p className="text-color-primary dark:text-teal-400 font-bold text-md uppercase">
                     temperament
                   </p>
-                  <h3 className="text-black text-lg font-semibold">
+                  <h3 className="text-black dark:text-gray-200 text-lg font-semibold">
                     {viewedCat.temperament}
                   </h3>
                 </div>
               </div>
               <div className="mt-7">
-                <p className="text-[10px] tracking-[0.2em] font-bold text-gray-700">
+                <p className="text-[10px] tracking-[0.2em] font-bold text-gray-700 dark:text-gray-200">
                   STORY
                 </p>
-                <div className="mt-3 space-y-3 text-sm text-gray-800 leading-relaxed">
+                <div className="mt-3 space-y-3 text-sm text-gray-800 dark:text-gray-200 leading-relaxed">
                   <p>{viewedCat.story}</p>
                 </div>
               </div>

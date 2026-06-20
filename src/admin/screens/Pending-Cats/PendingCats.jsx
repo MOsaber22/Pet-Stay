@@ -72,10 +72,10 @@ const PendingCats = () => {
         <p className="text-color-primary uppercase text-xs font-semibold">
           Curation Pipeline
         </p>
-        <h1 className=" text-5xl md:text-5xl lg:text[3.5rem] leading-tight tracking-tight font-bold">
+        <h1 className=" text-5xl md:text-5xl lg:text[3.5rem] leading-tight tracking-tight font-bold dark:text-gray-300">
           Pending <span className="text-color-primary">New Arrivals</span>
         </h1>
-        <p className="text-lg text-gray-700">
+        <p className="text-lg text-gray-700 dark:text-gray-200">
           Review new arrivals before they are listed in the catalog.
         </p>
         </div>
@@ -83,7 +83,7 @@ const PendingCats = () => {
         {pendingCats.map((cat,index) => {
           return (
             <div
-              className="group flex flex-col md:flex-row md:justify-between justify-center items-start md:items-center my-3 gap-5 md:gap-3 lg:gap-10 w-full bg-gray-100 hover:bg-gray-300 transition-all duration-500 rounded-md py-3 px-3"
+              className="group flex flex-col md:flex-row md:justify-between justify-center items-start md:items-center my-3 gap-5 md:gap-3 lg:gap-10 w-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 transition-all duration-500 rounded-md py-3 px-3"
               key={cat.id}
             >
               <div className="flex items-center gap-5">
@@ -96,23 +96,23 @@ const PendingCats = () => {
                   <h2 className="text-lg font-bold text-color-primary">
                     {cat.name}
                   </h2>
-                  <h2 className="text-sm text-gray-700">{cat.breed}</h2>
+                  <h2 className="text-sm text-gray-700 dark:text-gray-200">{cat.breed}</h2>
                 </div>
               </div>
               <div className="flex md:flex-col justify-center items-center gap-4">
-                <p className="text-sm text-gray-700">Owner</p>
+                <p className="text-sm text-gray-700 dark:text-gray-200">Owner</p>
                 <h3 className=" text-lg font-semibold text-color-primary">
                   {cat.owner}
                 </h3>
               </div>
               <div className="flex md:flex-col justify-center items-center gap-4">
-                <p className="text-sm text-gray-700">Status</p>
+                <p className="text-sm text-gray-700 dark:text-gray-200">Status</p>
                 <h3 className="text-md text-white font-semibold bg-deep-orange-200 rounded-xl px-2">
                   {cat.status}
                 </h3>
               </div>
               <div className="flex md:flex-col gap-3 text-center">
-                <p className="text-gray-700 text-md">Action</p>
+                <p className="text-gray-700 dark:text-gray-200 text-md">Action</p>
                 <div className="flex items-center justify-evenly gap-1 md:gap-3">
                   <Link to={`/admin/cat-details/${cat.id}`}>
                     <button  className="h-9 w-9 rounded-full bg-gray-800 hover:bg-gray-600 text-gray-100 hover:text-black flex items-center justify-center transition-colors duration-500">
