@@ -16,12 +16,12 @@ const links = [
 
 export default function AdminSidebar({ onNavigate }) {
   return (
-    <div className="h-[calc(100vh-2rem)] bg-white rounded-3xl shadow-soft p-6 flex flex-col">
+    <div className="h-[calc(100vh-2rem)] bg-gradient-to-tl from-white to-blue-gray-200 dark:from-black rounded-3xl shadow-soft p-6 flex flex-col">
       <div className="mb-8">
         <h1 className="font-display font-extrabold text-2xl text-color-primary leading-none">
           Nurture Admin
         </h1>
-        <p className="text-[10px] tracking-[0.2em] text-gray-700 mt-2 font-semibold">
+        <p className="text-[10px] tracking-[0.2em] text-gray-700 dark:text-gray-300 mt-2 font-semibold">
           EDITORIAL DASHBOARD
         </p>
       </div>
@@ -38,7 +38,7 @@ export default function AdminSidebar({ onNavigate }) {
                 "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-lg transition-colors duration-300 relative",
                 isActive
                   ? "bg-primary-light text-color-primary font-semibold"
-                  : "text-ink/70 hover:bg-primary-light/60 hover:text-color-primary",
+                  : "text-ink/70 dark:text-gray-300 hover:bg-primary-light/60 hover:text-color-primary",
               ].join(" ")
             }
           >

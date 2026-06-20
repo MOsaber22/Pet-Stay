@@ -52,7 +52,7 @@ const AdminAllCats = () => {
               <h1 className="font-display font-bold text-color-primary text-5xl sm:text-5xl tracking-tight leading-[1.05] mt-2">
                 All Cats
               </h1>
-              <p className="mt-3 text-gray-700 max-w-xl text-xl">
+              <p className="mt-3 text-gray-700 dark:text-gray-300 max-w-xl text-xl">
                 Every resident in the sanctuary, ready for review and care.
               </p>
             </div>
@@ -65,7 +65,7 @@ const AdminAllCats = () => {
             {allCats.map((cat) => (
               <article
                 key={cat.id}
-                className="group bg-white rounded-3xl shadow-soft overflow-hidden flex flex-col hover:shadow-lg transition-shadow"
+                className="group bg-white dark:bg-gray-800 rounded-3xl shadow-soft overflow-hidden flex flex-col hover:shadow-lg transition-shadow"
               >
                 <div className="aspect-[4/3] bg-sand relative overflow-hidden">
                   <img
@@ -88,12 +88,12 @@ const AdminAllCats = () => {
                       <h3 className="font-display font-extrabold text-xl text-color-primary leading-tight">
                         {cat.name}
                       </h3>
-                      <p className="text-md text-gray-700 mt-0.5">
+                      <p className="text-md text-gray-700 dark:text-gray-300 mt-0.5">
                         {cat.breed}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-[10px] tracking-[0.15em] font-semibold text-gray-700">
+                      <p className="text-[10px] tracking-[0.15em] font-semibold text-gray-700 dark:text-gray-300">
                         AGE
                       </p>
                       <p className=" font-bold text-color-primary">
@@ -102,7 +102,7 @@ const AdminAllCats = () => {
                     </div>
                   </div>
 
-                  <div className="mt-4 flex items-center gap-4 text-md text-gray-700">
+                  <div className="mt-4 flex items-center gap-4 text-md text-gray-700 dark:text-gray-300">
                     <span className="inline-flex items-center gap-1">
                       <HiOutlineLocationMarker />
                     </span>
