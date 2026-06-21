@@ -84,7 +84,7 @@ const Overview = () => {
                 New Cats awaiting health clearance before listing.
               </p>
               <Link to="pending-cats">
-                <button className="px-4 py-2 rounded-lg text-white bg-teal-700 hover:bg-teal-400 duration-500 mt-5 font-semibold hover:-translate-y-1">
+                <button className="px-4 py-2 rounded-lg text-white bg-teal-700 hover:bg-teal-900 duration-500 mt-5 font-semibold hover:-translate-y-1">
                   view all pending cats
                 </button>
               </Link>

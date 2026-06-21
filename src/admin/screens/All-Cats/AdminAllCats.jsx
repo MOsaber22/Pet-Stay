@@ -18,9 +18,10 @@ const statusStyles = {
 const AdminAllCats = () => {
   const [error, setError] = useState("");
   const [allCats, setAllCats] = useState([]);
+
+  const url = import.meta.env.VITE_CATS;
   const getAllCats = async () => {
     try {
-      const url = import.meta.env.VITE_CATS;
       const req = await fetch(`${url}/cats`);
       const res = await req.json();
       const cats = res.filter((cat) => cat.status !== "pending");
@@ -30,6 +31,23 @@ const AdminAllCats = () => {
     }
   };
 
+  const deleteCat = async (catID) => {
+    try{
+      const req = await fetch(`${url}/cats/${catID}`,{
+      method: "DELETE",
+      headers: {"Content-Type": "application/json"}
+    });
+    const res = await req.json();
+    // console.log(res);
+    let deletedCat = res;
+    let notPendingCats = [...allCats];
+    notPendingCats = notPendingCats.filter((cat) => cat.id !== deletedCat.id);
+    setAllCats(notPendingCats);
+    }
+    catch(e){
+      setError(`Failed to delete cat, please try again. ${e.message}`)
+    }
+  }
   useEffect(() => {
     getAllCats();
   }, []);
@@ -121,6 +139,7 @@ const AdminAllCats = () => {
                       </button>
                     </Link>
                     <button
+                      onClick={() => deleteCat(cat.id)}
                       title="Remove"
                       className="h-9 w-9 rounded-full bg-red-50 hover:bg-red-400 text-deep-orange-800 hover:text-white flex items-center justify-center transition-colors duration-500"
                     >
