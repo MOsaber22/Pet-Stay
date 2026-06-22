@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   HiOutlineSearch,
   HiOutlinePlus,
@@ -8,6 +8,7 @@ import {
   HiOutlineEye,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { loadingContext } from "../../../context/LoadingContext";
 
 const statusStyles = {
   available: "bg-light-green-200 text-teal-900",
@@ -19,20 +20,26 @@ const AdminAllCats = () => {
   const [error, setError] = useState("");
   const [allCats, setAllCats] = useState([]);
 
+  const { loading , isLoading , setIsLoading } = useContext(loadingContext);
+
   const url = import.meta.env.VITE_CATS;
   const getAllCats = async () => {
     try {
+      setIsLoading(true);
       const req = await fetch(`${url}/cats`);
       const res = await req.json();
       const cats = res.filter((cat) => cat.status !== "pending");
       setAllCats(cats);
     } catch (e) {
       setError(`Failed to load cats. Please try again. ${e.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const deleteCat = async (catID) => {
     try{
+      setIsLoading(true);
       const req = await fetch(`${url}/cats/${catID}`,{
       method: "DELETE",
       headers: {"Content-Type": "application/json"}
@@ -47,6 +54,9 @@ const AdminAllCats = () => {
     catch(e){
       setError(`Failed to delete cat, please try again. ${e.message}`)
     }
+    finally{
+      setIsLoading(false);
+    }
   }
   useEffect(() => {
     getAllCats();
@@ -59,6 +69,10 @@ const AdminAllCats = () => {
             <h2 className="text-2xl font-bold mb-3">Error</h2>
             <p className="text-lg">{error}</p>
           </div>
+        </div>
+      ) : isLoading ? (
+        <div className="flex items-center justify-center min-h-screen">
+          {loading()}
         </div>
       ) : (
         <>

@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { HiOutlineArrowLeft, HiOutlineVideoCamera } from "react-icons/hi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { loadingContext } from "../../../context/LoadingContext";
 
 const CatDetail = () => {
   const { catID } = useParams();
@@ -19,14 +20,19 @@ const CatDetail = () => {
     image: "",
   });
 
+  const {loading, isLoading, setIsLoading} = useContext(loadingContext);
   const getViewedCat = async () => {
       try {
+        setIsLoading(true);
         const url = import.meta.env.VITE_CATS;
         const req = await fetch(`${url}/cats/${catID}`);
         const res = await req.json();
         setVeiwedCat(res);
       } catch (e) {
         setError(`Failed to load cat details. Please try again. ${e.message}`);
+      }
+      finally {
+        setIsLoading(false);
       }
     };
 
@@ -48,6 +54,10 @@ const CatDetail = () => {
               <HiOutlineArrowLeft /> GO BACK
             </button>
           </div>
+        </div>
+      ) : isLoading ? (
+        <div className="flex items-center justify-center min-h-screen">
+          {loading()}
         </div>
       ) : (
         <div className="space-y-10">
