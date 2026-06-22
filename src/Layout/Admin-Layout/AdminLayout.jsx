@@ -1,21 +1,22 @@
 import { Route, Routes } from "react-router-dom";
-import Overview from "../../admin/screens/Overview/Overview";
-import PendingCats from "../../admin/screens/Pending-Cats/PendingCats";
-import AdminAllCats from "../../admin/screens/All-Cats/AdminAllCats";
-import NotFound from "../../pages/Not-Found/NotFound";
-import { useState } from "react";
+import { lazy,Suspense, useContext, useState } from "react";
+import { loadingContext, LoadingContextProvider } from "../../context/LoadingContext";
+const Overview = lazy(() => import("../../admin/screens/Overview/Overview"));
+const PendingCats = lazy(() => import("../../admin/screens/Pending-Cats/PendingCats"));
+const AdminAllCats = lazy(() => import("../../admin/screens/All-Cats/AdminAllCats"));
 import AdminSidebar from "../../admin/components/Admin-Navbar/AdminSidebar";
 import AdminNavbar from "../../admin/components/NavBar/AdminNavbar";
-import Users from "../../admin/screens/Users/Users";
-import AdoptRequest from "../../admin/screens/AdoptionRequest/AdoptionRequest";
-import CatDetail from "../../admin/screens/Cat-Details/CatDetail";
+const Users = lazy(() => import("../../admin/screens/Users/Users"));
+const AdoptRequest = lazy(() => import("../../admin/screens/AdoptionRequest/AdoptionRequest"));
+const CatDetail = lazy(() => import("../../admin/screens/Cat-Details/CatDetail"));
 import ThemeChanger, { useTheme } from "../../context/ThemeProvider";
-import { LoadingContextProvider } from "../../context/LoadingContext";
+import NotFound from "../../pages/Not-Found/NotFound";
 const AdminContent = () => {
   const { theme, changeTheme } = useTheme();
   const dark = theme === "dark";
   const [open, setOpen] = useState(false);
 
+  const {loading} = useContext(loadingContext);
   return (
     <div
       className={`min-h-screen ${dark ? "bg-gray-900" : "bg-[#f7f9f9]"} flex font-sans`}
@@ -47,15 +48,17 @@ const AdminContent = () => {
         <main
           className={`px-4 sm:px-6 lg:px-8 py-6 flex-1 ${dark ? "bg-gray-900" : "bg-[#f7f9f9]"}`}
         >
-          <Routes>
-            <Route index element={<Overview />} />
-            <Route path="pending-cats" element={<PendingCats />} />
-            <Route path="all-cats" element={<AdminAllCats />} />
-            <Route path="users" element={<Users />} />
-            <Route path="adoption-requests" element={<AdoptRequest />} />
-            <Route path="cat-details/:catID" element={<CatDetail />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<div className="flex items-center justify-center min-h-screen">{loading()}</div>}>
+            <Routes>
+              <Route index element={<Overview />} />
+              <Route path="pending-cats" element={<PendingCats />} />
+              <Route path="all-cats" element={<AdminAllCats />} />
+              <Route path="users" element={<Users />} />
+              <Route path="adoption-requests" element={<AdoptRequest />} />
+              <Route path="cat-details/:catID" element={<CatDetail />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
     </div>
