@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { loadingContext } from "../../../context/LoadingContext";
 
 const Overview = () => {
   const [error, setError] = useState("");
   const [numOfpendingCats, setNumOfPendingCats] = useState(0);
   const [numOfApprovedCats, setNumOfApprovedCats] = useState(0);
+
+  const {loading, isLoading, setIsLoading} = useContext(loadingContext);
   const getCats = async () => {
     try {
+      setIsLoading(true);
       const url = import.meta.env.VITE_CATS;
       const req = await fetch(`${url}/cats`);
       const res = await req.json();
@@ -19,6 +23,8 @@ const Overview = () => {
       setNumOfApprovedCats(approvedCats.length);
     } catch (e) {
       setError(`Failed to load pending cats. Please try again. ${e.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -34,6 +40,10 @@ const Overview = () => {
             <h2 className="text-2xl font-bold mb-3">Error</h2>
             <p className="text-lg">{error}</p>
           </div>
+        </div>
+      ) : isLoading ? (
+        <div className="flex items-center justify-center min-h-screen">
+          {loading()}
         </div>
       ) : (
         <div className="mx-5">
