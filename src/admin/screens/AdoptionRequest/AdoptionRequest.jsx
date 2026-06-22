@@ -40,7 +40,7 @@ const AdoptionRequest = () => {
             strokeWidth="2"
             viewBox="0 0 24 24"
             aria-hidden="true"
-            class="text-base"
+            className="text-base"
             height="1em"
             width="1em"
             xmlns="http://www.w3.org/2000/svg"
