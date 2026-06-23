@@ -143,6 +143,14 @@ const CatDetail = () => {
                     {viewedCat.temperament}
                   </h3>
                 </div>
+                <div className="flex flex-col gap-3 bg-gray-200 dark:bg-gray-800 rounded-xl p-5">
+                  <p className="text-color-primary dark:text-teal-400 font-bold text-md uppercase">
+                    Weight
+                  </p>
+                  <h3 className="text-black dark:text-gray-200 text-lg font-semibold">
+                    {viewedCat.weight} kg
+                  </h3>
+                </div>
               </div>
               <div className="mt-7">
                 <p className="text-[10px] tracking-[0.2em] font-bold text-gray-700 dark:text-gray-200">
