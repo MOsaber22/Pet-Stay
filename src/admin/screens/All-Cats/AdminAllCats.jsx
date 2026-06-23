@@ -20,7 +20,7 @@ const AdminAllCats = () => {
   const [error, setError] = useState("");
   const [allCats, setAllCats] = useState([]);
 
-  const { loading , isLoading , setIsLoading } = useContext(loadingContext);
+  const { loading, isLoading, setIsLoading } = useContext(loadingContext);
 
   const url = import.meta.env.VITE_CATS;
   const getAllCats = async () => {
@@ -38,26 +38,24 @@ const AdminAllCats = () => {
   };
 
   const deleteCat = async (catID) => {
-    try{
+    try {
       setIsLoading(true);
-      const req = await fetch(`${url}/cats/${catID}`,{
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"}
-    });
-    const res = await req.json();
-    // console.log(res);
-    let deletedCat = res;
-    let notPendingCats = [...allCats];
-    notPendingCats = notPendingCats.filter((cat) => cat.id !== deletedCat.id);
-    setAllCats(notPendingCats);
-    }
-    catch(e){
-      setError(`Failed to delete cat, please try again. ${e.message}`)
-    }
-    finally{
+      const req = await fetch(`${url}/cats/${catID}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      const res = await req.json();
+      // console.log(res);
+      let deletedCat = res;
+      let notPendingCats = [...allCats];
+      notPendingCats = notPendingCats.filter((cat) => cat.id !== deletedCat.id);
+      setAllCats(notPendingCats);
+    } catch (e) {
+      setError(`Failed to delete cat, please try again. ${e.message}`);
+    } finally {
       setIsLoading(false);
     }
-  }
+  };
   useEffect(() => {
     getAllCats();
   }, []);
@@ -88,9 +86,11 @@ const AdminAllCats = () => {
                 Every resident in the sanctuary, ready for review and care.
               </p>
             </div>
-            <button className="inline-flex items-center justify-center gap-2 primary-bg hover:bg-teal-800 text-white font-semibold text-md rounded-full px-5 py-3 transition-colors shadow-lg shadow-teal/20">
-              <HiOutlinePlus className="text-base" /> Add new cat
-            </button>
+            <Link to="/admin/all-cats/add-new-cat">
+              <button className="inline-flex items-center justify-center gap-2 primary-bg hover:bg-teal-800 text-white font-semibold text-md rounded-full px-5 py-3 transition-colors shadow-lg shadow-teal/20">
+                <HiOutlinePlus className="text-base" /> Add new cat
+              </button>
+            </Link>
           </header>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -144,9 +144,11 @@ const AdminAllCats = () => {
                   </div>
 
                   <div className="mt-5 pt-4 border-t border-black/5 flex items-center gap-2">
-                    <button className="flex-1 inline-flex items-center justify-center gap-1.5 bg-teal-50 hover:bg-teal-700 hover:text-white text-color-primary font-semibold text-md rounded-full px-4 py-2 transition-colors duration-500">
-                      <HiOutlinePencil /> Edit
-                    </button>
+                    <Link to={`/admin/all-cats/edit-cat/${cat.id}`}>
+                      <button className="flex-1 inline-flex items-center justify-center gap-1.5 bg-teal-50 hover:bg-teal-700 hover:text-white text-color-primary font-semibold text-md rounded-full px-4 py-2 transition-colors duration-500">
+                        <HiOutlinePencil /> Edit
+                      </button>
+                    </Link>
                     <Link to={`/admin/cat-details/${cat.id}`}>
                       <button className="h-9 w-9 rounded-full bg-gray-50 hover:bg-gray-400 text-gray-800 hover:text-black flex items-center justify-center transition-colors duration-500">
                         <HiOutlineEye />

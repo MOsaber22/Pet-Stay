@@ -11,6 +11,8 @@ const AdoptRequest = lazy(() => import("../../admin/screens/AdoptionRequest/Adop
 const CatDetail = lazy(() => import("../../admin/screens/Cat-Details/CatDetail"));
 import ThemeChanger, { useTheme } from "../../context/ThemeProvider";
 import NotFound from "../../pages/Not-Found/NotFound";
+import AddNewCat from "../../admin/screens/All-Cats/AddNewCat";
+const EditCat = lazy(() => import("../../admin/screens/All-Cats/EditCat"));
 const AdminContent = () => {
   const { theme, changeTheme } = useTheme();
   const dark = theme === "dark";
@@ -56,6 +58,8 @@ const AdminContent = () => {
               <Route path="users" element={<Users />} />
               <Route path="adoption-requests" element={<AdoptRequest />} />
               <Route path="cat-details/:catID" element={<CatDetail />} />
+              <Route path="all-cats/add-new-cat" element={<AddNewCat />} />
+              <Route path="all-cats/edit-cat/:catID" element={<EditCat />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
