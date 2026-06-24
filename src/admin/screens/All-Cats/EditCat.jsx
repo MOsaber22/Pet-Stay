@@ -8,6 +8,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { loadingContext } from "../../../context/LoadingContext";
 import CustomSelect from "../../components/CustomSelect/CustomSelect";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const EditCat = () => {
   const { catID } = useParams();
@@ -100,18 +101,13 @@ const EditCat = () => {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-        <div className="p-8 bg-red-50 dark:bg-red-900/30 border-2 border-red-400 dark:border-red-600 text-red-700 dark:text-red-400 rounded-lg max-w-md text-center">
-          <h2 className="text-2xl font-bold mb-3">Error</h2>
-          <p className="text-lg">{error}</p>
-          <button
-            onClick={() => navigate(-1)}
-            className="mt-4 px-6 py-2 bg-red-600 dark:bg-red-700 text-white rounded-lg hover:bg-red-700 dark:hover:bg-red-800 transition-colors"
-          >
-            Go Back
-          </button>
-        </div>
-      </div>
+      <>
+        <ErrorMessage
+          error={error}
+          onGoBack={() => navigate(-1)}
+          showBackButton={true}
+        />
+      </>
     );
   }
 

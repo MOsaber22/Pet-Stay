@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { HiOutlineEye } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { loadingContext } from "../../../context/LoadingContext";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const PendingCats = () => {
   const [error, setError] = useState("");
@@ -71,12 +72,7 @@ const PendingCats = () => {
   return (
     <div>
       {error ? (
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="p-8 bg-red-50 border-2 border-red-400 text-red-700 rounded-lg max-w-md text-center">
-            <h2 className="text-2xl font-bold mb-3">Error</h2>
-            <p className="text-lg">{error}</p>
-          </div>
-        </div>
+        <ErrorMessage error={error} onRetry={getPendingCats} />
       ) : isLoading ? (
         <div className="flex items-center justify-center min-h-screen">
           {loading()}
