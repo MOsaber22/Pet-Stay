@@ -24,6 +24,7 @@ const AddNewCat = () => {
     story: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,20 +54,32 @@ const AddNewCat = () => {
     e.preventDefault();
     const url = import.meta.env.VITE_CATS;
     try {
-        fetch(`${url}/cats`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        })
+      fetch(`${url}/cats`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
         .then((res) => res.json())
         .then(() => {
-            navigate(-1);
-        })
-    }
-    catch (error) {
-        console.error("Error adding cat:", error.message);
+          navigate(-1);
+        });
+    } catch (error) {
+      setError("Failed to add cat. Please try again.", error.message);
     }
   };
+
+  if (error) {
+    return (
+      <>
+        <ErrorMessage
+          error={error}
+          onRetry={handleSubmit}
+          onGoBack={() => navigate(-1)}
+          showBackButton={true}
+        />
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-4 py-10 sm:px-8 transition-colors duration-300">

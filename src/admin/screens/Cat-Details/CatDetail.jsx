@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { HiOutlineArrowLeft, HiOutlineVideoCamera } from "react-icons/hi";
 import { useContext, useEffect, useState } from "react";
 import { loadingContext } from "../../../context/LoadingContext";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const CatDetail = () => {
   const { catID } = useParams();
@@ -43,18 +44,7 @@ const CatDetail = () => {
   return (
     <div>
       {error ? (
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="p-8 bg-red-50 border-2 border-red-400 text-red-700 rounded-lg max-w-md text-center">
-            <h2 className="text-2xl font-bold mb-3">Error</h2>
-            <p className="text-lg mb-4">{error}</p>
-            <button
-              onClick={() => navigate(-1)}
-              className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] font-bold text-white bg-teal-500 hover:bg-teal-800 duration-500 px-4 py-2 rounded-lg"
-            >
-              <HiOutlineArrowLeft /> GO BACK
-            </button>
-          </div>
-        </div>
+        <ErrorMessage error={error} onRetry={getViewedCat} onGoBack={() => navigate(-1)} showBackButton={true} />
       ) : isLoading ? (
         <div className="flex items-center justify-center min-h-screen">
           {loading()}
