@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-color-primary{
+    @apply text-teal-500
+}
+.primary-bg{
+    @apply bg-teal-500
+}
