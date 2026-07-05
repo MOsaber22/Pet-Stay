@@ -1,14 +1,10 @@
-import { FaUserCircle, FaSun, FaMoon } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Register() {
 
   const navigate = useNavigate();
-
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -105,150 +101,6 @@ export default function Register() {
   return (
 
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300">
-
-      <header className="bg-white dark:bg-gray-800 shadow-sm px-4 sm:px-6 md:px-8 py-4 flex items-center justify-between sticky top-0 z-40 transition-colors duration-300">
-
-        <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-teal-600 dark:text-teal-400">
-          WhereMy Home
-        </h1>
-
-        <nav className="hidden md:flex gap-6 text-sm font-medium">
-
-          <NavLink
-            to="/"
-            className={({ isActive }) => isActive ? "text-teal-600 dark:text-teal-400 font-semibold"
-                : "text-gray-600 dark:text-gray-300 hover:text-teal-500 transition-colors"
-            }
-          >
-            Home
-          </NavLink>
-
-          <NavLink
-            to="/cats"
-            className={({ isActive }) => isActive ? "text-teal-600 dark:text-teal-400 font-semibold"
-                : "text-gray-600 dark:text-gray-300 hover:text-teal-500 transition-colors"
-            }
-          >
-            Cats
-          </NavLink>
-
-          <NavLink
-            to="/contact"
-            className={({ isActive }) => isActive ? "text-teal-600 dark:text-teal-400 font-semibold"
-                : "text-gray-600 dark:text-gray-300 hover:text-teal-500 transition-colors"
-            }
-          >
-            Contact
-          </NavLink>
-
-          <NavLink
-            to="/login"
-            className={({ isActive }) => isActive ? "text-teal-600 dark:text-teal-400 font-bold"
-                : "text-gray-600 dark:text-gray-300 hover:text-teal-500 transition-colors"
-            }
-          >
-            Login
-          </NavLink>
-
-          <NavLink
-            to="/register"
-            className={({ isActive }) => isActive ? "text-teal-600 dark:text-teal-400 font-bold"
-                : "text-gray-600 dark:text-gray-300 hover:text-teal-500 transition-colors"
-            }
-          >
-            Register
-          </NavLink>
-
-        </nav>
-
-        <div className="flex items-center gap-3">
-
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="text-xl text-gray-500 dark:text-yellow-300 hover:text-teal-600 dark:hover:text-yellow-200 transition-colors"
-            aria-label="Toggle dark mode"
-          >
-            {darkMode ? <FaSun /> : <FaMoon />}
-          </button>
-
-          <div className="relative">
-
-            <FaUserCircle
-              className="text-2xl cursor-pointer text-gray-500 dark:text-gray-300 hover:text-teal-600 transition-colors"
-              onClick={() => setProfileOpen(!profileOpen)}
-            />
-
-            {profileOpen && (
-              <div className="absolute right-0 mt-3 bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-3 flex flex-col gap-2 text-sm z-50 w-36 border border-gray-100 dark:border-gray-700">
-
-                <Link
-                  to="/profile"
-                  className="px-3 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-colors"
-                  onClick={() => setProfileOpen(false)}
-                >
-                  Profile
-                </Link>
-
-                <Link
-                  to="/login"
-                  className="px-3 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 transition-colors"
-                  onClick={() => setProfileOpen(false)}
-                >
-                  Login
-                </Link>
-
-                <button className="text-left px-3 py-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/30 text-red-500 transition-colors">
-                  Logout
-                </button>
-
-              </div>
-            )}
-
-          </div>
-
-          <button
-            className="md:hidden text-2xl text-gray-600 dark:text-gray-200"
-            onClick={() => setMenuOpen(true)}
-          >
-            ☰
-          </button>
-
-        </div>
-
-      </header>
-
-      {menuOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-50"
-          onClick={() => setMenuOpen(false)}
-        >
-
-          <div
-            className="w-64 bg-white dark:bg-gray-800 h-full p-6 shadow-xl transition-colors duration-300"
-            onClick={(e) => e.stopPropagation()}
-          >
-
-            <button
-              className="text-2xl mb-6 text-gray-600 dark:text-gray-200"
-              onClick={() => setMenuOpen(false)}
-            >
-              ✕
-            </button>
-
-            <div className="flex flex-col gap-5 text-lg font-medium text-gray-700 dark:text-gray-200">
-
-              <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-              <Link to="/cats" onClick={() => setMenuOpen(false)}>Cats</Link>
-              <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-              <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
-              <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
-
-            </div>
-
-          </div>
-
-        </div>
-      )}
 
       <div className="flex-grow flex items-center justify-center px-4 py-10">
 
@@ -375,37 +227,6 @@ export default function Register() {
         </motion.div>
 
       </div>
-
-      <footer className="bg-white dark:bg-gray-800 mt-16 px-4 sm:px-8 md:px-16 py-8 border-t dark:border-gray-700 transition-colors duration-300">
-
-        <div className="flex flex-col md:flex-row justify-between gap-6">
-
-          <div>
-
-            <h2 className="text-xl font-bold text-teal-600 dark:text-teal-400">
-              WhereMy Home
-            </h2>
-
-            <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
-              Helping pets find homes.
-            </p>
-
-          </div>
-
-          <div className="flex gap-6 text-sm text-gray-600 dark:text-gray-300">
-
-            <Link to="/">Home</Link>
-            <Link to="/pets">Pets</Link>
-            <Link to="/about">About</Link>
-            <Link to="/contact">Contact</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-
-          </div>
-
-        </div>
-
-      </footer>
 
     </div>
   );
