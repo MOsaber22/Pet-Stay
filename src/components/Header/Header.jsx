@@ -47,11 +47,6 @@ const NavList = ({ onClose }) => (
 );
 
 const Header = () => {
-
-  return (
-    <div></div>
-  )
-}
   const [open, setOpen] = useState(false);
   const { changeTheme } = useTheme();
 
