@@ -9,7 +9,6 @@ export default function HomePagePetCare() {
   const [petType, setPetType] = React.useState("Cat");
   const [error, setError] = React.useState("");
 
-  // تطبيق dark mode على الصفحة كلها + حفظه فى localStorage
   React.useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
