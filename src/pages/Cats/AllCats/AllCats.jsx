@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaPaw, FaPlus, FaMapMarkerAlt } from "react-icons/fa";
 
@@ -6,14 +6,18 @@ const AllCats = () => {
   const [cats, setCats] = useState([]);
 
   const getAllCats = async () => {
-    const req = await fetch("http://localhost:3000/cats", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-    const data = await req.json();
-    setCats(data);
+    try {
+      const req = await fetch("http://localhost:3000/cats", {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      const data = await req.json();
+      setCats(data);
+    } catch (error) {
+      console.error("Error fetching cats:", error);
+    }
   };
 
   useEffect(() => {
@@ -22,7 +26,7 @@ const AllCats = () => {
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen pt-10 pb-20 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="w-full mx-auto px-6 md:px-10 lg:px-16">
         <div className="mb-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 text-center md:text-left">
           <div>
             <h1 className="text-4xl font-extrabold text-black dark:text-white flex items-center justify-center md:justify-start gap-3">
