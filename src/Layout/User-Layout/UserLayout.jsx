@@ -12,6 +12,8 @@ import AdoptRequest from "../../pages/Cats/AdoptRequest/AdoptRequest";
 import AllCats from "../../pages/Cats/AllCats/AllCats";
 import CatDetails from "../../pages/Cats/CatDetails/CatDetails";
 import NotFound from "../../pages/Not-Found/NotFound";
+import Privacy from './../../pages/Privacy-Policy/Privcy';
+import Terms from './../../pages/Terms-of-Service/Terms';
 
 const UserLayout = () => {
   return (
@@ -29,6 +31,8 @@ const UserLayout = () => {
         <Route path="all-cats" element={<AllCats />} />
         <Route path="catDetails/:id" element={<CatDetails />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
       <Footer />
     </div>

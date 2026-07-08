@@ -4,10 +4,10 @@ import { MdEmail, MdLanguage } from "react-icons/md";
 import { Typography } from "@material-tailwind/react";
 
 const footerLinks = [
-  "Privacy Policy",
-  "Terms of Service",
-  "Volunteer",
-  "Donate",
+  { label: "Privacy Policy", to: "/privacy" },
+  { label: "Terms of Service", to: "/terms" },
+  { label: "Volunteer"},
+  { label: "Donate"},
 ];
 
 const Footer = () => {
@@ -31,14 +31,15 @@ const Footer = () => {
         </div>
 
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 w-full md:w-auto">
-          {footerLinks.map((label) => (
-            <span
-              key={label}
+          {footerLinks.map((link) => (
+           <Link
+              key={link.label}
+              to={link.to}
               className="text-gray-500 dark:text-gray-400 hover:dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 text-sm cursor-pointer transition-colors"
             >
-              {label}
-            </span>
-          ))}
+              {link.label}
+            </Link>
+            ))}
         </nav>
 
         <div className="flex items-center justify-center gap-3 w-full md:w-auto">

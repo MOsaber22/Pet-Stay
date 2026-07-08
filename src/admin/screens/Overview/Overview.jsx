@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { loadingContext } from "../../../context/LoadingContext";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const Overview = () => {
   const [error, setError] = useState("");
   const [numOfpendingCats, setNumOfPendingCats] = useState(0);
   const [numOfApprovedCats, setNumOfApprovedCats] = useState(0);
+
+  const {loading, isLoading, setIsLoading} = useContext(loadingContext);
   const getCats = async () => {
     try {
+      setIsLoading(true);
       const url = import.meta.env.VITE_CATS;
       const req = await fetch(`${url}/cats`);
       const res = await req.json();
@@ -19,6 +24,8 @@ const Overview = () => {
       setNumOfApprovedCats(approvedCats.length);
     } catch (e) {
       setError(`Failed to load pending cats. Please try again. ${e.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -29,11 +36,10 @@ const Overview = () => {
   return (
     <div>
       {error ? (
+        <ErrorMessage error={error} onRetry={getCats} />
+      ) : isLoading ? (
         <div className="flex items-center justify-center min-h-screen">
-          <div className="p-8 bg-red-50 border-2 border-red-400 text-red-700 rounded-lg max-w-md text-center">
-            <h2 className="text-2xl font-bold mb-3">Error</h2>
-            <p className="text-lg">{error}</p>
-          </div>
+          {loading()}
         </div>
       ) : (
         <div className="mx-5">
@@ -41,18 +47,18 @@ const Overview = () => {
             <h1 className="text-5xl text-color-primary font-bold py-3 mt-5">
               Dashboard Overview
             </h1>
-            <p className="text-lg text-gray-700">
+            <p className="text-lg text-gray-700 dark:text-gray-200">
               Monitoring the sanctuary's pulse. Status of residents and
               community partners
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="flex flex-col justify-between gap-10  bg-gradient-to-tr from-blue-gray-50 to-blue-gray-100 p-6 sm:p-8 rounded-3xl">
+            <div className="flex flex-col justify-between gap-10  bg-gradient-to-tr from-blue-gray-50 to-blue-gray-100 dark:from-black  p-6 sm:p-8 rounded-3xl">
               <div className="">
-                <p className="text-color-primary">Primary Catalog</p>
-                <h2 className="mt-5 text-5xl font-extrabold text-teal-800">
+                <p className="text-color-primary dark:text-teal-400">Primary Catalog</p>
+                <h2 className="mt-5 text-5xl font-extrabold text-teal-800 dark:text-teal-400">
                   {numOfApprovedCats}
-                  <span className="text-black text-2xl font-semibold ml-5">
+                  <span className="text-black dark:text-gray-200 text-2xl font-semibold ml-5">
                     Total Cats
                   </span>
                 </h2>
@@ -66,21 +72,21 @@ const Overview = () => {
               </div>
             </div>
 
-            <div className="bg-light-green-100 rounded-3xl p-6 sm:p-8 flex flex-col">
+            <div className="bg-light-green-100 bg-gradient-to-tr dark:from-black dark:to-green-300 rounded-3xl p-6 sm:p-8 flex flex-col">
               <div className="flex">
                 <div className="h-9 w-9 rounded-full bg-white/60 flex items-center justify-center text-teal-800">
                   <HiOutlineDotsHorizontal />
                 </div>
               </div>
               <div className="mt-6">
-                <p className="font-display font-extrabold text-5xl text-teal-800">
+                <p className="font-display font-extrabold text-5xl text-teal-800 dark:text-teal-400">
                   {numOfpendingCats}
                 </p>
-                <p className="font-display font-bold text-lg text-ink mt-1">
+                <p className="font-display font-bold text-lg text-ink mt-1 dark:text-gray-300">
                   Pending Intake
                 </p>
               </div>
-              <p className="mt-auto pt-8 text-sm text-gray-700 leading-relaxed">
+              <p className="mt-auto pt-8 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                 New Cats awaiting health clearance before listing.
               </p>
               <Link to="pending-cats">
@@ -90,30 +96,30 @@ const Overview = () => {
               </Link>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-soft p-6 sm:p-8 md:col-span-2">
+            <div className="bg-white bg-gradient-to-tr dark:from-black dark:to-gray-900 rounded-3xl shadow-soft p-6 sm:p-8 md:col-span-2">
               <div className="flex items-center justify-between">
                 <p className="text-[11px] tracking-[0.2em] text-color-primary font-semibold">
                   COMMUNITY REACH
                 </p>
-                <FaUsers className="text-teal-700 text-xl" />
+                <FaUsers className="text-teal-700 dark:text-teal-300 text-xl" />
               </div>
               <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="font-display font-extrabold text-3xl text-teal-800 leading-none">
+                    <p className="font-display font-extrabold text-3xl text-teal-800 dark:text-teal-300 leading-none">
                       1,248
                     </p>
-                    <p className="text-sm font-semibold text-gray-800 mt-1">
+                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-300 mt-1">
                       Registered Users
                     </p>
                   </div>
                 </div>
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="font-display font-bold text-3xl text-teal-800 leading-none">
+                    <p className="font-display font-bold text-3xl text-teal-800 dark:text-teal-300 leading-none">
                       156
                     </p>
-                    <p className="text-sm font-semibold text-gray-800 mt-1">
+                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-300 mt-1">
                       Verified Owner
                     </p>
                   </div>

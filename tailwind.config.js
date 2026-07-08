@@ -13,7 +13,9 @@ export default withMT({
       colors: {
         'nuetral' : '#F7F9F9',
         'secondary' : '#8DB48E',
-        'tertiary' : '#D28B63'
+        'tertiary' : '#D28B63',
+        // dark
+        'text-secondary' : '#616161',
       }
     },
   },
