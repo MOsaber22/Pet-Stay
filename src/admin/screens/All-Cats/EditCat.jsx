@@ -23,9 +23,7 @@ const EditCat = () => {
     age: "",
     breed: "",
     weight: "",
-    status: "Available",
     location: "",
-    owner: "",
     temperament: "",
     story: "",
   });
@@ -35,7 +33,7 @@ const EditCat = () => {
     try {
       setIsLoading(true);
       const res = await fetch(`${url}/cats/${catID}`);
-      const data = await res.json();
+      const { data } = await res.json();
       setFormData(data);
       setImagePreview(data.image);
     } catch (err) {
@@ -230,7 +228,7 @@ const EditCat = () => {
                   name="gender"
                   value={formData.gender}
                   onChange={handleInputChange}
-                  options={["Female", "Male"]}
+                  options={["female", "male"]}
                   label="Gender"
                 />
               </div>
@@ -251,16 +249,8 @@ const EditCat = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <CustomSelect
-                  name="status"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                  options={["Available", "Reserved", "Adopted"]}
-                  label="Status"
-                />
-              </div>
-              <div>
+              
+              <div className="col-span-2">
                 <label className="block text-xs tracking-[0.15em] font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">
                   Location
                 </label>
@@ -273,20 +263,6 @@ const EditCat = () => {
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-xs tracking-[0.15em] font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">
-                Current Owner
-              </label>
-              <input
-                type="text"
-                name="owner"
-                value={formData.owner}
-                onChange={handleInputChange}
-                placeholder="e.g. John Doe"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
-              />
             </div>
 
             <div>

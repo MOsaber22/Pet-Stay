@@ -19,6 +19,7 @@ const CatDetail = () => {
     temperament: "",
     story: "",
     image: "",
+    weight: 0,
   });
 
   const {loading, isLoading, setIsLoading} = useContext(loadingContext);
@@ -27,8 +28,8 @@ const CatDetail = () => {
         setIsLoading(true);
         const url = import.meta.env.VITE_CATS;
         const req = await fetch(`${url}/cats/${catID}`);
-        const res = await req.json();
-        setVeiwedCat(res);
+        const {data} = await req.json();
+        setVeiwedCat(data);
       } catch (e) {
         setError(`Failed to load cat details. Please try again. ${e.message}`);
       }

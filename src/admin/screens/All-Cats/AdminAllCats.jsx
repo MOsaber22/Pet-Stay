@@ -28,8 +28,8 @@ const AdminAllCats = () => {
     try {
       setIsLoading(true);
       const req = await fetch(`${url}/cats`);
-      const res = await req.json();
-      const cats = res.filter((cat) => cat.status !== "pending");
+      const {data} = await req.json();
+      const cats = data.cats.filter((cat) => cat.status !== "pending" && cat.status !== "rejected");
       setAllCats(cats);
     } catch (e) {
       setError(`Failed to load cats. Please try again. ${e.message}`);
@@ -45,11 +45,9 @@ const AdminAllCats = () => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      const res = await req.json();
-      // console.log(res);
-      let deletedCat = res;
+      await req.json();
       let notPendingCats = [...allCats];
-      notPendingCats = notPendingCats.filter((cat) => cat.id !== deletedCat.id);
+      notPendingCats = notPendingCats.filter((cat) => cat._id !== catID);
       setAllCats(notPendingCats);
     } catch (e) {
       setError(`Failed to delete cat, please try again. ${e.message}`);
@@ -92,7 +90,7 @@ const AdminAllCats = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
             {allCats.map((cat) => (
               <article
-                key={cat.id}
+                key={cat._id}
                 className="group bg-white dark:bg-gray-800 rounded-3xl shadow-soft overflow-hidden flex flex-col hover:shadow-lg transition-shadow"
               >
                 <div className="aspect-[4/3] bg-sand relative overflow-hidden">
@@ -140,18 +138,18 @@ const AdminAllCats = () => {
                   </div>
 
                   <div className="mt-5 pt-4 border-t border-black/5 flex items-center gap-2">
-                    <Link to={`/admin/all-cats/edit-cat/${cat.id}`}>
+                    <Link to={`/admin/all-cats/edit-cat/${cat._id}`}>
                       <button className="flex-1 inline-flex items-center justify-center gap-1.5 bg-teal-50 hover:bg-teal-700 hover:text-white text-color-primary font-semibold text-md rounded-full px-4 py-2 transition-colors duration-500">
                         <HiOutlinePencil /> Edit
                       </button>
                     </Link>
-                    <Link to={`/admin/cat-details/${cat.id}`}>
+                    <Link to={`/admin/cat-details/${cat._id}`}>
                       <button className="h-9 w-9 rounded-full bg-gray-50 hover:bg-gray-400 text-gray-800 hover:text-black flex items-center justify-center transition-colors duration-500">
                         <HiOutlineEye />
                       </button>
                     </Link>
                     <button
-                      onClick={() => deleteCat(cat.id)}
+                      onClick={() => deleteCat(cat._id)}
                       title="Remove"
                       className="h-9 w-9 rounded-full bg-red-50 hover:bg-red-400 text-deep-orange-800 hover:text-white flex items-center justify-center transition-colors duration-500"
                     >
