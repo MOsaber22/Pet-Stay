@@ -6,6 +6,7 @@ import {
   HiOutlineCamera,
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import CustomSelect from "../../components/CustomSelect/CustomSelect";
 
 const AddNewCat = () => {
@@ -13,18 +14,35 @@ const AddNewCat = () => {
   const [formData, setFormData] = useState({
     image: null,
     name: "",
-    gender: "Female",
+    gender: "",
     age: "",
     breed: "",
     weight: "",
-    status: "Available",
     location: "",
-    owner: "",
     temperament: "",
     story: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const [error, setError] = useState("");
+
+  const validateForm = () => {
+    if (
+      !formData.name.trim() ||
+      !formData.gender.trim() ||
+      !formData.age.trim() ||
+      !formData.breed.trim() ||
+      !formData.weight ||
+      !formData.location.trim() ||
+      !formData.temperament.trim() ||
+      !formData.story.trim()
+    ) {
+      setError("Please fill in all fields before adding this cat.");
+      return false;
+    }
+    return true;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,47 +55,68 @@ const AddNewCat = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData((prev) => ({
-        ...prev,
-        image: file,
-      }));
-      // Create preview
       const reader = new FileReader();
       reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          image: reader.result,
+        }));
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    if (!validateForm()) return;
+    setIsSubmitting(true);
     const url = import.meta.env.VITE_CATS;
     try {
-      fetch(`${url}/cats`, {
+      const res = await fetch(`${url}/cats`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      })
-        .then((res) => res.json())
-        .then(() => {
-          navigate(-1);
-        });
-    } catch (error) {
-      setError("Failed to add cat. Please try again.", error.message);
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.message || `Server responded with ${res.status}`);
+      }
+      await res.json();
+      setSubmitSuccess(true);
+      setTimeout(() => navigate("/admin/all-cats"), 1500);
+    } catch (err) {
+      setError(`Failed to add cat. ${err.message || "Please try again."}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
+  if (submitSuccess) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-4 py-10 sm:px-8 transition-colors duration-300">
+        <div className="max-w-3xl mx-auto rounded-3xl bg-white dark:bg-gray-800 shadow-xl p-10 text-center">
+          <HiOutlineCheck className="mx-auto mb-4 text-6xl text-teal-600" />
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+            Cat added successfully!
+          </h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            The new cat has been saved. Redirecting to the All Cats page...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (error) {
     return (
-      <>
-        <ErrorMessage
-          error={error}
-          onRetry={handleSubmit}
-          onGoBack={() => navigate(-1)}
-          showBackButton={true}
-        />
-      </>
+      <ErrorMessage
+        error={error}
+        onRetry={() => setError("")}
+        onGoBack={() => navigate("/admin/all-cats")}
+        showBackButton={true}
+      />
     );
   }
 
@@ -158,7 +197,6 @@ const AddNewCat = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                required
                 placeholder="e.g. Luna"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
               />
@@ -174,7 +212,6 @@ const AddNewCat = () => {
                   name="breed"
                   value={formData.breed}
                   onChange={handleInputChange}
-                  required
                   placeholder="e.g. Maine Coon"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -188,7 +225,6 @@ const AddNewCat = () => {
                   name="age"
                   value={formData.age}
                   onChange={handleInputChange}
-                  required
                   placeholder="e.g. 2 Years"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -201,7 +237,7 @@ const AddNewCat = () => {
                   name="gender"
                   value={formData.gender}
                   onChange={handleInputChange}
-                  options={["Female", "Male"]}
+                  options={["female", "male"]}
                   label="Gender"
                 />
               </div>
@@ -222,16 +258,7 @@ const AddNewCat = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <CustomSelect
-                  name="status"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                  options={["Available", "Reserved", "Adopted"]}
-                  label="Status"
-                />
-              </div>
-              <div>
+              <div className="col-span-2">
                 <label className="block text-xs tracking-[0.15em] font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">
                   Location
                 </label>
@@ -244,21 +271,6 @@ const AddNewCat = () => {
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-xs tracking-[0.15em] font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">
-                Current Owner
-              </label>
-              <input
-                type="text"
-                name="owner"
-                required
-                value={formData.owner}
-                onChange={handleInputChange}
-                placeholder="e.g. John Doe"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
-              />
             </div>
 
             <div>
@@ -292,10 +304,11 @@ const AddNewCat = () => {
             <div className="flex items-center gap-3 pt-4">
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white font-semibold text-sm rounded-full px-8 py-3 transition-colors shadow-lg shadow-teal-700/20"
+                disabled={isSubmitting}
+                className={`inline-flex items-center justify-center gap-2 text-white font-semibold text-sm rounded-full px-8 py-3 transition-colors shadow-lg shadow-teal-700/20 ${isSubmitting ? "bg-teal-300 cursor-not-allowed" : "bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700"}`}
               >
                 <HiOutlineCheck />
-                Add cat
+                {isSubmitting ? "Adding..." : "Add cat"}
               </button>
               <button
                 type="button"

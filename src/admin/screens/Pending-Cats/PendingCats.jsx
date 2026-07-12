@@ -16,8 +16,8 @@ const PendingCats = () => {
       setIsLoading(true);
       const url = import.meta.env.VITE_CATS;
       const req = await fetch(`${url}/cats`);
-      const res = await req.json();
-      const pendingCats = res.filter((cat) => cat.status === "pending");
+      const {data} = await req.json();
+      const pendingCats = data.cats.filter((cat) => cat.status === "pending");
       setPendingCats(pendingCats);
     } catch (e) {
       setError(`Failed to load pending cats. Please try again. ${e.message}`);
@@ -31,7 +31,7 @@ const PendingCats = () => {
       setIsLoading(true);
       const url = import.meta.env.VITE_CATS;
       const cat = pendingCats[index];
-      await fetch(`${url}/cats/${cat.id}`, {
+      await fetch(`${url}/cats/${cat._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...cat, status: "rejected" }),
@@ -50,7 +50,7 @@ const PendingCats = () => {
       setIsLoading(true);
       const url = import.meta.env.VITE_CATS;
       const cat = pendingCats[index];
-      await fetch(`${url}/cats/${cat.id}`, {
+      await fetch(`${url}/cats/${cat._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...cat, status: "available" }),
@@ -95,7 +95,7 @@ const PendingCats = () => {
               return (
                 <div
                   className="group flex flex-col md:flex-row md:justify-between justify-center items-start md:items-center my-3 gap-5 md:gap-3 lg:gap-10 w-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 transition-all duration-500 rounded-md py-3 px-3"
-                  key={cat.id}
+                  key={cat._id}
                 >
                   <div className="flex items-center gap-5">
                     <img
@@ -133,7 +133,7 @@ const PendingCats = () => {
                       Action
                     </p>
                     <div className="flex items-center justify-evenly gap-1 md:gap-3">
-                      <Link to={`/admin/cat-details/${cat.id}`}>
+                      <Link to={`/admin/cat-details/${cat._id}`}>
                         <button className="h-9 w-9 rounded-full bg-gray-800 hover:bg-gray-600 text-gray-100 hover:text-black flex items-center justify-center transition-colors duration-500">
                           <HiOutlineEye />
                         </button>
