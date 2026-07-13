@@ -27,8 +27,8 @@ export default function LoginPage() {
     }
   }, [darkMode]);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+      e.preventDefault();
     const newErrors = { email: "", password: "" };
 
     if (!email.trim()) {
@@ -45,7 +45,33 @@ export default function LoginPage() {
 
     setErrors(newErrors);
     if (newErrors.email || newErrors.password) return;
-    navigate("/");
+    try {
+  const response = await fetch("http://localhost:3000/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (response.ok) {
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("user", JSON.stringify(data.user));
+
+  alert("Login Successful");
+  navigate("/");
+  } else {
+    alert(data.message);
+  }
+} catch (error) {
+  console.log(error);
+  alert("Something went wrong");
+}
   };
 
   return (
