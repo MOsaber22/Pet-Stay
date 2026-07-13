@@ -7,14 +7,15 @@ const AllCats = () => {
 
   const getAllCats = async () => {
     try {
-      const req = await fetch("http://localhost:3000/cats", {
+      const baseUrl = import.meta.env.VITE_CATS || "http://localhost:3000";
+      const req = await fetch(`${baseUrl}/api/v1/cats`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
         },
       });
       const data = await req.json();
-      setCats(data);
+      setCats(data.data?.cats || []);
     } catch (error) {
       console.error("Error fetching cats:", error);
     }
@@ -131,14 +132,14 @@ const AllCats = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {cats.map(
                 ({
-                  id,
+                  _id: id,
                   story,
                   image,
                   name,
                   status,
                   gender,
                   breed,
-                  lifeStage,
+                  location,
                 }) => (
                   <div
                     key={id}
@@ -170,7 +171,7 @@ const AllCats = () => {
                       <div className="flex items-center justify-between mt-auto pt-5 border-t border-gray-100 dark:border-gray-700">
                         <span className="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center gap-1">
                           <FaMapMarkerAlt className="h-4 w-4" />
-                          {cats.location || "Cairo"}
+                          {location || "Cairo"}
                         </span>
                         <Link
                           to={`/catDetails/${id}`}
