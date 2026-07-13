@@ -27,8 +27,8 @@ const CatDetails = () => {
   useEffect(() => {
     const fetchCatDetails = async () => {
       try {
-        const baseUrl = import.meta.env.VITE_CATS || "http://localhost:3000";
-        const req = await fetch(`${baseUrl}/api/v1/cats/${id}`);
+        const baseUrl = import.meta.env.VITE_CATS || "http://localhost:3000/api/v1";
+        const req = await fetch(`${baseUrl}/cats/${id}`);
         const data = await req.json();
         if (data.data) {
           setCat(data.data);
