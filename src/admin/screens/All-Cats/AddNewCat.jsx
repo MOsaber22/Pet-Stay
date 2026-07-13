@@ -6,6 +6,7 @@ import {
   HiOutlineCamera,
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import CustomSelect from "../../components/CustomSelect/CustomSelect";
 
 const AddNewCat = () => {
@@ -13,71 +14,108 @@ const AddNewCat = () => {
   const [formData, setFormData] = useState({
     image: null,
     name: "",
-    gender: "Female",
+    gender: "",
     age: "",
     breed: "",
     weight: "",
-    status: "Available",
     location: "",
-    owner: "",
     temperament: "",
     story: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const validateForm = () => {
+    if (
+      !formData.name.trim() ||
+      !formData.gender.trim() ||
+      !formData.age.trim() ||
+      !formData.breed.trim() ||
+      !formData.weight ||
+      !formData.location.trim() ||
+      !formData.temperament.trim() ||
+      !formData.story.trim()
+    ) {
+      setError("Please fill in all fields before adding this cat.");
+      return false;
+    }
+    return true;
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (file) {
       setFormData((prev) => ({
         ...prev,
         image: file,
       }));
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    if (!validateForm()) return;
+    setIsSubmitting(true);
     const url = import.meta.env.VITE_CATS;
     try {
-      fetch(`${url}/cats`, {
+      const formDataToSend = new FormData();
+      formDataToSend.append("image", formData.image);
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("gender", formData.gender);
+      formDataToSend.append("age", formData.age);
+      formDataToSend.append("breed", formData.breed);
+      formDataToSend.append("weight", formData.weight);
+      formDataToSend.append("location", formData.location);
+      formDataToSend.append("temperament", formData.temperament);
+      formDataToSend.append("story", formData.story);
+
+      const res = await fetch(`${url}/cats`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-        .then((res) => res.json())
-        .then(() => {
-          navigate(-1);
-        });
-    } catch (error) {
-      setError("Failed to add cat. Please try again.", error.message);
+        body: formDataToSend,
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.message || `Server responded with ${res.status}`);
+      }
+      await res.json();
+      setSubmitSuccess(true);
+      setTimeout(() => navigate("/admin/all-cats"), 1500);
+    } catch (err) {
+      console.log(err);
+      setError(`Failed to add cat. ${err.message || "Please try again."}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  if (submitSuccess) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-4 py-10 sm:px-8 transition-colors duration-300">
+        <div className="max-w-3xl mx-auto rounded-3xl bg-white dark:bg-gray-800 shadow-xl p-10 text-center">
+          <HiOutlineCheck className="mx-auto mb-4 text-6xl text-teal-600" />
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+            Cat added successfully!
+          </h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            The new cat has been saved. Redirecting to the All Cats page...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
-      <>
-        <ErrorMessage
-          error={error}
-          onRetry={handleSubmit}
-          onGoBack={() => navigate(-1)}
-          showBackButton={true}
-        />
-      </>
+      <ErrorMessage
+        error={error}
+        onRetry={() => setError("")}
+        onGoBack={() => navigate("/admin/all-cats")}
+        showBackButton={true}
+      />
     );
   }
 
@@ -157,8 +195,12 @@ const AddNewCat = () => {
                 type="text"
                 name="name"
                 value={formData.name}
-                onChange={handleInputChange}
-                required
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
                 placeholder="e.g. Luna"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
               />
@@ -173,8 +215,12 @@ const AddNewCat = () => {
                   type="text"
                   name="breed"
                   value={formData.breed}
-                  onChange={handleInputChange}
-                  required
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      breed: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. Maine Coon"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -187,8 +233,12 @@ const AddNewCat = () => {
                   type="text"
                   name="age"
                   value={formData.age}
-                  onChange={handleInputChange}
-                  required
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      age: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. 2 Years"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -200,8 +250,13 @@ const AddNewCat = () => {
                 <CustomSelect
                   name="gender"
                   value={formData.gender}
-                  onChange={handleInputChange}
-                  options={["Female", "Male"]}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      gender: e.target.value,
+                    }))
+                  }
+                  options={["female", "male"]}
                   label="Gender"
                 />
               </div>
@@ -213,7 +268,12 @@ const AddNewCat = () => {
                   type="number"
                   name="weight"
                   value={formData.weight}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      weight: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. 4.5"
                   step="0.1"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
@@ -222,16 +282,7 @@ const AddNewCat = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <CustomSelect
-                  name="status"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                  options={["Available", "Reserved", "Adopted"]}
-                  label="Status"
-                />
-              </div>
-              <div>
+              <div className="col-span-2">
                 <label className="block text-xs tracking-[0.15em] font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">
                   Location
                 </label>
@@ -239,26 +290,16 @@ const AddNewCat = () => {
                   type="text"
                   name="location"
                   value={formData.location}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      location: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. Wing A"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-xs tracking-[0.15em] font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">
-                Current Owner
-              </label>
-              <input
-                type="text"
-                name="owner"
-                required
-                value={formData.owner}
-                onChange={handleInputChange}
-                placeholder="e.g. John Doe"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
-              />
             </div>
 
             <div>
@@ -269,7 +310,12 @@ const AddNewCat = () => {
                 type="text"
                 name="temperament"
                 value={formData.temperament}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    temperament: e.target.value,
+                  }))
+                }
                 placeholder="e.g. Affectionate, Calm, Playful"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
               />
@@ -282,7 +328,12 @@ const AddNewCat = () => {
               <textarea
                 name="story"
                 value={formData.story}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    story: e.target.value,
+                  }))
+                }
                 rows={5}
                 placeholder="Tell us about this cat's personality, background, and unique characteristics…"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all resize-none"
@@ -292,10 +343,11 @@ const AddNewCat = () => {
             <div className="flex items-center gap-3 pt-4">
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white font-semibold text-sm rounded-full px-8 py-3 transition-colors shadow-lg shadow-teal-700/20"
+                disabled={isSubmitting}
+                className={`inline-flex items-center justify-center gap-2 text-white font-semibold text-sm rounded-full px-8 py-3 transition-colors shadow-lg shadow-teal-700/20 ${isSubmitting ? "bg-teal-300 cursor-not-allowed" : "bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700"}`}
               >
                 <HiOutlineCheck />
-                Add cat
+                {isSubmitting ? "Adding..." : "Add cat"}
               </button>
               <button
                 type="button"

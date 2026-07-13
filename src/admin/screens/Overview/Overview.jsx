@@ -17,9 +17,9 @@ const Overview = () => {
       setIsLoading(true);
       const url = import.meta.env.VITE_CATS;
       const req = await fetch(`${url}/cats`);
-      const res = await req.json();
-      const pendingCats = res.filter((cat) => cat.status === "pending");
-      const approvedCats = res.filter((cat) => cat.status !== "pending");
+      const {data} = await req.json();
+      const pendingCats = data.cats.filter((cat) => cat.status === "pending");
+      const approvedCats = data.cats.filter((cat) => cat.status !== "pending");
       setNumOfPendingCats(pendingCats.length);
       setNumOfApprovedCats(approvedCats.length);
     } catch (e) {

@@ -77,11 +77,11 @@ export default function Register() {
     try {
 
       const response = await fetch(
-        "http://localhost:3000/register",
+        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
+          body: JSON.stringify({   fullName: name, email, password }),
         }
       );
 
@@ -116,7 +116,6 @@ export default function Register() {
           className="w-full max-w-5xl bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 transition-colors duration-300"
         >
 
-          {/* Left: editorial image */}
           <div className="relative hidden md:block group overflow-hidden">
 
             <img
