@@ -77,7 +77,7 @@ export default function Register() {
     try {
 
       const response = await fetch(
-        "https://pet-stay-back-end.vercel.app/api/auth/signup",
+        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
