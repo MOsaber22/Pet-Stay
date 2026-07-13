@@ -46,7 +46,7 @@ const handleLogin = async (e) => {
     setErrors(newErrors);
     if (newErrors.email || newErrors.password) return;
     try {
-  const response = await fetch("http://localhost:3000/api/auth/login", {
+  const response = await fetch("https://pet-stay-back-end.vercel.app/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
