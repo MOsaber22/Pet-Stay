@@ -1,7 +1,18 @@
-import React from 'react';
-import { FaPaperPlane, FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa";
+import React, { useState } from 'react';
+import { FaPaperPlane, FaInstagram, FaTwitter, FaFacebook, FaCheckCircle } from "react-icons/fa";
 
 const Contact = () => {
+  const [isSent, setIsSent] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSent(true);
+    setTimeout(() => {
+      setIsSent(false);
+      e.target.reset();
+    }, 3000);
+  };
+
   return (
     <div className="min-h-screen bg-[#EDF6F9] dark:bg-gray-900 font-sans text-[#2D3436] dark:text-gray-200 transition-colors duration-300">
       <div className="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
@@ -57,7 +68,7 @@ const Contact = () => {
             <h3 className="text-3xl font-bold text-[#2D3436] dark:text-white mb-2">Send a Message</h3>
             <p className="text-gray-500 dark:text-gray-400 mb-8 font-medium">We typically respond within 24 hours.</p>
 
-            <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold text-gray-500 dark:text-gray-400 tracking-widest uppercase">Your Name</label>
                 <input type="text" placeholder="Oliver Whiskers" className="w-full px-4 py-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#83C5BE] dark:focus:ring-teal-400 focus:bg-white dark:focus:bg-gray-600 transition-all text-[#2D3436] dark:text-gray-100 font-medium placeholder-gray-400 dark:placeholder-gray-500" />
@@ -83,8 +94,12 @@ const Contact = () => {
                 <textarea rows="4" placeholder="Tell us about the home you can provide or any questions you have..." className="w-full px-4 py-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#83C5BE] dark:focus:ring-teal-400 focus:bg-white dark:focus:bg-gray-600 transition-all resize-none text-[#2D3436] dark:text-gray-100 font-medium placeholder-gray-400 dark:placeholder-gray-500"></textarea>
               </div>
 
-              <button type="submit" className="mt-4 bg-[#006D77] dark:bg-teal-600 text-white py-4 px-8 rounded-xl font-bold hover:bg-[#005a62] dark:hover:bg-teal-700 flex items-center justify-center gap-3 transition-all self-start">
-                Send Message <FaPaperPlane className="text-sm" />
+              <button type="submit" disabled={isSent} className={`mt-4 text-white py-4 px-8 rounded-xl font-bold flex items-center justify-center gap-3 transition-all self-start ${isSent ? 'bg-green-500' : 'bg-[#006D77] dark:bg-teal-600 hover:bg-[#005a62] dark:hover:bg-teal-700'}`}>
+                {isSent ? (
+                  <>Message Sent! <FaCheckCircle className="text-sm" /></>
+                ) : (
+                  <>Send Message <FaPaperPlane className="text-sm" /></>
+                )}
               </button>
             </form>
           </div>
