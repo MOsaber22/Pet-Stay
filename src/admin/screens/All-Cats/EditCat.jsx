@@ -47,14 +47,6 @@ const EditCat = () => {
     fetchCatData();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -75,14 +67,26 @@ const EditCat = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
+      const formDataToSend = new FormData();
+      formDataToSend.append("image", formData.image);
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("gender", formData.gender);
+      formDataToSend.append("age", formData.age);
+      formDataToSend.append("breed", formData.breed);
+      formDataToSend.append("weight", formData.weight);
+      formDataToSend.append("location", formData.location);
+      formDataToSend.append("temperament", formData.temperament);
+      formDataToSend.append("story", formData.story);
+
       const res = await fetch(`${url}/cats/${catID}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
       await res.json();
       navigate(-1);
     } catch (err) {
+      console.log(err);
+
       setError(`Error updating cat: ${err.message}`);
     } finally {
       setIsLoading(false);
@@ -184,7 +188,12 @@ const EditCat = () => {
                 type="text"
                 name="name"
                 value={formData.name}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
                 required
                 placeholder="e.g. Luna"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
@@ -200,7 +209,12 @@ const EditCat = () => {
                   type="text"
                   name="breed"
                   value={formData.breed}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      breed: e.target.value,
+                    }))
+                  }
                   required
                   placeholder="e.g. Maine Coon"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
@@ -214,7 +228,12 @@ const EditCat = () => {
                   type="text"
                   name="age"
                   value={formData.age}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      age: e.target.value,
+                    }))
+                  }
                   required
                   placeholder="e.g. 2 Years"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
@@ -227,7 +246,12 @@ const EditCat = () => {
                 <CustomSelect
                   name="gender"
                   value={formData.gender}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      gender: e.target.value,
+                    }))
+                  }
                   options={["female", "male"]}
                   label="Gender"
                 />
@@ -240,7 +264,12 @@ const EditCat = () => {
                   type="number"
                   name="weight"
                   value={formData.weight}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      weight: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. 4.5"
                   step="0.1"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
@@ -249,7 +278,6 @@ const EditCat = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              
               <div className="col-span-2">
                 <label className="block text-xs tracking-[0.15em] font-bold text-gray-700 dark:text-gray-300 uppercase mb-2">
                   Location
@@ -258,7 +286,12 @@ const EditCat = () => {
                   type="text"
                   name="location"
                   value={formData.location}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      location: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. Wing A"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -273,7 +306,12 @@ const EditCat = () => {
                 type="text"
                 name="temperament"
                 value={formData.temperament}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    temperament: e.target.value,
+                  }))
+                }
                 placeholder="e.g. Affectionate, Calm, Playful"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
               />
@@ -286,7 +324,12 @@ const EditCat = () => {
               <textarea
                 name="story"
                 value={formData.story}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    story: e.target.value,
+                  }))
+                }
                 rows={5}
                 placeholder="Tell us about this cat's personality, background, and unique characteristics…"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all resize-none"
