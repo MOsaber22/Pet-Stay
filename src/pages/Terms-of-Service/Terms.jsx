@@ -14,8 +14,8 @@ import { GoLaw } from "react-icons/go";
 
 
 const CheckItem = ({ children }) => (
-  <div className="flex items-start gap-2 text-gray-600 text-base transition-all duration-300 hover:translate-x-1.5 hover:text-gray-900">
-    <HiCheckCircle className="w-5 h-5 text-teal-500 mt-1 shrink-0" />
+  <div className="flex items-start gap-2 text-gray-600 dark:text-gray-300 text-base transition-all duration-300 hover:translate-x-1.5 hover:text-gray-900 dark:hover:text-white">
+    <HiCheckCircle className="w-5 h-5 text-teal-500 dark:text-teal-400 mt-1 shrink-0" />
     {children}
   </div>
 );
@@ -28,7 +28,7 @@ const sections = [
     title: "Introduction",
     content: (
       <div className="space-y-3">
-        <p className="text-gray-900 font-medium">
+        <p className="text-gray-900 font-medium dark:text-white">
           Welcome to PetStay Terms of Service.
         </p>
         <CheckItem>By using PetStay you agree to these terms</CheckItem>
@@ -58,7 +58,7 @@ const sections = [
     title: "User Responsibilities",
     content: (
       <div className="space-y-3">
-        <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-teal-800 text-sm font-medium">
+        <div className="bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-xl p-4 text-teal-800 dark:text-teal-300 text-sm font-medium">
           Use PetStay respectfully and ethically at all times.
         </div>
 
@@ -119,7 +119,7 @@ const sections = [
     title: "Changes to Terms",
     content: (
       <div className="space-y-3">
-        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-yellow-800 text-sm">
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4 text-yellow-800 dark:text-yellow-300 text-sm">
           These terms may be updated at any time without prior notice.
         </div>
 
@@ -131,21 +131,21 @@ const sections = [
 
 function Terms() {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
 
-      <section className="py-24 bg-gradient-to-br from-teal-50 to-white text-center">
-        <GoLaw className="mx-auto w-10 h-10 text-teal-600 mb-4" />
+      <section className="py-24 bg-gradient-to-br from-teal-50 to-white dark:from-gray-900 dark:to-gray-800 text-center transition-colors duration-300">
+        <GoLaw className="mx-auto w-10 h-10 text-teal-600 dark:text-teal-400 mb-4" />
 
-        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">
+        <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
           Terms <span className="text-teal-600">of Service</span>
         </h1>
 
         <div className="w-16 h-1 bg-teal-600 mx-auto mt-4 rounded"></div>
 
-        <p className="text-gray-600 mt-4 text-base max-w-xl mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 mt-4 text-base max-w-xl mx-auto">
           Clear, simple rules that keep{" "}
           <span className="text-teal-600 font-bold">Pet</span>
-          <span className="font-bold">Stay</span> safe and trustworthy for everyone.
+          <span className="font-bold text-gray-600 dark:text-white">Stay</span> safe and trustworthy for everyone.
         </p>
       </section>
 
@@ -157,7 +157,7 @@ function Terms() {
             <section
               key={s.id}
               id={s.id}
-              className="group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
             >
               <div className="flex items-center gap-4 mb-4">
 
@@ -165,11 +165,11 @@ function Terms() {
                   {s.number}
                 </span>
 
-                <div className="bg-teal-100 p-2 rounded-full transition-all duration-300 group-hover:bg-teal-200">
-                  <Icon className="w-5 h-5 text-teal-600 transition-colors duration-300 group-hover:text-teal-700" />
+                <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-full transition-all duration-300 group-hover:bg-teal-200 dark:group-hover:bg-teal-800">
+                  <Icon className="w-5 h-5 text-teal-600 dark:text-teal-400 transition-colors duration-300 group-hover:text-teal-700 dark:group-hover:text-teal-300" />
                 </div>
 
-                <h2 className="text-lg font-bold text-gray-900">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
                   {s.title}
                 </h2>
               </div>
@@ -179,14 +179,14 @@ function Terms() {
           );
         })}
 
-        <section className="bg-teal-50 border border-teal-200 shadow-sm rounded-2xl p-8 text-center">
-          <HiOutlineEnvelope className="mx-auto w-6 h-6 text-teal-600 mb-3" />
+        <section className="bg-teal-50 dark:bg-gray-800 border border-teal-200 dark:border-gray-700 shadow-sm rounded-2xl p-8 text-center transition-colors duration-300">
+          <HiOutlineEnvelope className="mx-auto w-6 h-6 text-teal-600 dark:text-teal-400 mb-3" />
 
-          <h2 className="text-lg font-bold text-gray-900 mb-2">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
             Need Help?
           </h2>
 
-          <p className="text-gray-600 mb-5">
+          <p className="text-gray-600 dark:text-gray-300 mb-5">
             Contact us anytime for questions about these terms.
           </p>
 
