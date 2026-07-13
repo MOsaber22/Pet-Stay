@@ -7,8 +7,8 @@ const AllCats = () => {
 
   const getAllCats = async () => {
     try {
-      const baseUrl = import.meta.env.VITE_CATS || "http://localhost:3000";
-      const req = await fetch(`${baseUrl}/api/v1/cats`, {
+      const baseUrl = import.meta.env.VITE_CATS || "http://localhost:3000/api/v1";
+      const req = await fetch(`${baseUrl}/cats`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
