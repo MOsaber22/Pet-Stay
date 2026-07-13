@@ -44,26 +44,14 @@ const AddNewCat = () => {
     return true;
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({
-          ...prev,
-          image: reader.result,
-        }));
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setFormData((prev) => ({
+        ...prev,
+        image: file,
+      }));
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -74,10 +62,20 @@ const AddNewCat = () => {
     setIsSubmitting(true);
     const url = import.meta.env.VITE_CATS;
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("image", formData.image);
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("gender", formData.gender);
+      formDataToSend.append("age", formData.age);
+      formDataToSend.append("breed", formData.breed);
+      formDataToSend.append("weight", formData.weight);
+      formDataToSend.append("location", formData.location);
+      formDataToSend.append("temperament", formData.temperament);
+      formDataToSend.append("story", formData.story);
+
       const res = await fetch(`${url}/cats`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
@@ -87,6 +85,7 @@ const AddNewCat = () => {
       setSubmitSuccess(true);
       setTimeout(() => navigate("/admin/all-cats"), 1500);
     } catch (err) {
+      console.log(err);
       setError(`Failed to add cat. ${err.message || "Please try again."}`);
     } finally {
       setIsSubmitting(false);
@@ -196,7 +195,12 @@ const AddNewCat = () => {
                 type="text"
                 name="name"
                 value={formData.name}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
                 placeholder="e.g. Luna"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
               />
@@ -211,7 +215,12 @@ const AddNewCat = () => {
                   type="text"
                   name="breed"
                   value={formData.breed}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      breed: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. Maine Coon"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -224,7 +233,12 @@ const AddNewCat = () => {
                   type="text"
                   name="age"
                   value={formData.age}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      age: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. 2 Years"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -236,7 +250,12 @@ const AddNewCat = () => {
                 <CustomSelect
                   name="gender"
                   value={formData.gender}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      gender: e.target.value,
+                    }))
+                  }
                   options={["female", "male"]}
                   label="Gender"
                 />
@@ -249,7 +268,12 @@ const AddNewCat = () => {
                   type="number"
                   name="weight"
                   value={formData.weight}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      weight: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. 4.5"
                   step="0.1"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
@@ -266,7 +290,12 @@ const AddNewCat = () => {
                   type="text"
                   name="location"
                   value={formData.location}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      location: e.target.value,
+                    }))
+                  }
                   placeholder="e.g. Wing A"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
                 />
@@ -281,7 +310,12 @@ const AddNewCat = () => {
                 type="text"
                 name="temperament"
                 value={formData.temperament}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    temperament: e.target.value,
+                  }))
+                }
                 placeholder="e.g. Affectionate, Calm, Playful"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all"
               />
@@ -294,7 +328,12 @@ const AddNewCat = () => {
               <textarea
                 name="story"
                 value={formData.story}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    story: e.target.value,
+                  }))
+                }
                 rows={5}
                 placeholder="Tell us about this cat's personality, background, and unique characteristics…"
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/10 transition-all resize-none"
