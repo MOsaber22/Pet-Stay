@@ -15,8 +15,8 @@ import {
 } from "react-icons/hi2";
 
 const CheckItem = ({ children }) => (
-  <div className="flex items-start gap-2 text-gray-600 text-base hover:translate-x-1 transition hover:text-gray-900">
-    <span className="text-teal-600 text-lg">✔</span>
+  <div className="flex items-start gap-2 text-gray-600 dark:text-gray-300 text-base hover:translate-x-1 transition-all hover:text-gray-900 dark:hover:text-white">
+    <span className="text-teal-600 dark:text-teal-400 text-lg">✔</span>
     {children}
   </div>
 );
@@ -69,7 +69,7 @@ const sections = [
     title: "Sharing",
     content: (
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-teal-700 font-semibold">
+        <div className="flex items-center gap-2 text-teal-700 dark:text-teal-300 font-semibold">
           <HiOutlineLockClosed className="w-5 h-5" />
           We do not sell your data
         </div>
@@ -146,18 +146,18 @@ const sections = [
 
 function Privacy() {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
 
-      <section className="py-24 bg-gradient-to-br from-teal-50 to-white text-center">
-        <HiOutlineShieldCheck className="mx-auto w-10 h-10 text-teal-600 mb-4" />
-        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">
+      <section className="py-24 bg-gradient-to-br from-teal-50 to-white dark:from-gray-900 dark:to-gray-800 text-center transition-colors duration-300">
+        <HiOutlineShieldCheck className="mx-auto w-10 h-10 text-teal-600 dark:text-teal-400 mb-4" />
+        <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
           Privacy <span className="text-teal-600">Policy</span>
         </h1>
         <div className="w-16 h-1 bg-teal-600 mx-auto mt-4 rounded"></div>
-        <p className="text-gray-600 mt-4 text-base max-w-xl mx-auto leading-relaxed">
+        <p className="text-gray-600 dark:text-gray-300 mt-4 text-base max-w-xl mx-auto leading-relaxed">
           Your trust matters to us at
           <span className="text-teal-600 font-bold"> Pet</span>
-          <span className="font-bold">Stay</span>
+          <span className="font-bold dark:text-white">Stay</span>
         </p>
       </section>
 
@@ -169,18 +169,18 @@ function Privacy() {
             <section
               key={s.id}
               id={s.id}
-              className="bg-white even:bg-gray-50/40 border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group"
+              className="bg-white dark:bg-gray-800 even:bg-gray-50/40 dark:even:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group"
             >
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-xs bg-teal-600 text-white font-bold rounded-full px-2.5 py-1 shadow-sm">
                   {s.number}
                 </span>
 
-                <div className="bg-teal-100 p-2.5 rounded-full group-hover:bg-teal-200 transition all">
-                  <Icon className="w-5 h-5 text-teal-600" />
+                <div className="bg-teal-100 dark:bg-teal-900/30 p-2.5 rounded-full group-hover:bg-teal-200 dark:group-hover:bg-teal-800 transition-all">
+                  <Icon className="w-5 h-5 text-teal-600 dark:text-teal-400" />
                 </div>
 
-                <h2 className="text-lg font-bold text-gray-900 ">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
                   {s.title}
                 </h2>
               </div>
@@ -189,12 +189,12 @@ function Privacy() {
           );
         })}
 
-        <section className="bg-teal-50 border border-teal-200 shadow-sm rounded-2xl p-8 text-center">
-          <HiOutlineEnvelope className="mx-auto w-6 h-6 text-teal-600 mb-3" />
-          <h2 className="text-lg font-bold text-gray-900 mb-2">
+        <section className="bg-teal-50 dark:bg-gray-800 border border-teal-200 dark:border-gray-700 shadow-sm rounded-2xl p-8 text-center transition-colors duration-300">
+          <HiOutlineEnvelope className="mx-auto w-6 h-6 text-teal-600 dark:text-teal-400 mb-3" />
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
             Contact Us
           </h2>
-          <p className="text-gray-600 mb-5">
+          <p className="text-gray-600 dark:text-gray-300 mb-5">
             Have questions? Reach out anytime.
           </p>
 
