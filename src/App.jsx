@@ -10,19 +10,17 @@ const App = () => {
 
 
   return (
-    <>
-      <AuthProvider>
+        <AuthProvider>
         <ThemeChanger>
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              <Route path="/*" element={<UserLayout />} />
               <Route path="/admin/*" element={<AdminLayout />} />
+              <Route path="/*" element={<UserLayout />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </ThemeChanger>
       </AuthProvider>
-    </>
   );
 };
 
