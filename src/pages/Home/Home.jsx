@@ -139,9 +139,12 @@ setFilteredPets(result);  };
       <section className="px-4 sm:px-8 md:px-16 py-12">
         <div className="flex justify-between items-center mb-8">
           <h3 className="text-2xl font-bold">Featured Cats</h3>
-          <Link to="/all" className="text-teal-600 dark:text-teal-400 text-sm hover:underline">
-            View all Cats →
-          </Link>
+          <Link
+  to="/all-cats"
+  className="text-teal-600 dark:text-teal-400 text-sm hover:underline"
+>
+  View all Cats →
+</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPets.map((pet) => (
@@ -152,9 +155,12 @@ setFilteredPets(result);  };
                 <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">
                   {pet.type} • {pet.age}
                 </p>
-                <button className="mt-4 w-full border border-teal-500 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 py-2 rounded-full text-sm font-medium transition-colors">
-                  View Details
-                </button>
+                <Link
+  to={`/catDetails/${pet.id}`}
+  className="mt-4 w-full border border-teal-500 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 py-2 rounded-full text-sm font-medium transition-colors flex justify-center items-center"
+>
+  View Details
+</Link>
               </div>
             </div>
           ))}

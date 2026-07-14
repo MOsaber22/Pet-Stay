@@ -74,39 +74,34 @@ export default function Register() {
       return;
     }
 
-    try {
-
-const response = await fetch(
-  `${import.meta.env.VITE_API_URL}/api/auth/signup`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      fullName: name,
-      email,
-      password,
-    }),
-  });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Account Created Successfully");
-        console.log(data);
-        navigate("/login");
-      } else {
-        alert(data.message || "Registration Failed");
-      }
-
-    } catch (error) {
-      console.log(error);
-      alert("Something went wrong");
+     try {
+  const response = await fetch(
+    `${import.meta.env.VITE_CATS}/api/auth/signup`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fullName: name,
+        email,
+        password,
+      }),
     }
+  );
 
-  };
+  const data = await response.json();
 
+  if (response.ok) {
+    alert("Account Created Successfully");
+    navigate("/login");
+  } else {
+    alert(data.message);
+  }
+} catch (err) {
+  console.log(err);
+}
+};
   return (
 
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300">
