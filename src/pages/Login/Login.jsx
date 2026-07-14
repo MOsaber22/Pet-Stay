@@ -1,9 +1,11 @@
 import { FaUserCircle, FaSun, FaMoon, FaEnvelope, FaLock, FaGoogle, FaApple } from "react-icons/fa";
 import { useNavigate, Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -47,7 +49,7 @@ const handleLogin = async (e) => {
     if (newErrors.email || newErrors.password) return;
     try {
 const response = await fetch(
-  `${import.meta.env.VITE_API_URL}/api/auth/login`,
+  `${import.meta.env.VITE_CATS}/auth/login`,
   {
     method: "POST",
     headers: {
@@ -59,12 +61,11 @@ const response = await fetch(
   const data = await response.json();
 
   if (response.ok) {
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
+  login(data.user, data.token);
 
   alert("Login Successful");
   navigate("/");
-  } else {
+} else {
     alert(data.message);
   }
 } catch (error) {
