@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FaEdit, FaEnvelope, FaStar, FaSpinner, FaTimes, FaCheck, FaCamera } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaEdit, FaEnvelope, FaStar, FaRegClock, FaSpinner, FaTimes, FaCheck } from 'react-icons/fa';
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const fileInputRef = useRef(null);
-
-  // Edit modal state
+  
   const [showModal, setShowModal] = useState(false);
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState('');
@@ -85,20 +83,6 @@ const UserProfile = () => {
     }
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        const updatedUser = { ...user, avatar: base64String };
-        setUser(updatedUser);
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-[#EDF6F9] dark:bg-gray-900 flex items-center justify-center transition-colors duration-300">
@@ -124,21 +108,8 @@ const UserProfile = () => {
 
         {/* Avatar & Name */}
         <div className="flex flex-col items-center mb-10">
-          <div className="relative group w-40 h-40 rounded-full border-4 border-[#EDF6F9] dark:border-gray-900 overflow-hidden shadow-lg bg-white dark:bg-gray-700 transition-colors duration-300">
-            <img src={user?.avatar || '/images/user_avatar.png'} alt={user?.fullName || 'User'} className="w-full h-full object-cover" />
-            <div 
-              onClick={() => fileInputRef.current?.click()}
-              className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity duration-300"
-            >
-              <FaCamera className="text-white text-3xl" />
-            </div>
-            <input 
-              type="file" 
-              accept="image/*" 
-              ref={fileInputRef} 
-              onChange={handleImageUpload} 
-              className="hidden" 
-            />
+          <div className="w-40 h-40 rounded-full border-4 border-[#EDF6F9] dark:border-gray-900 overflow-hidden shadow-lg bg-white dark:bg-gray-700 transition-colors duration-300">
+            <img src='/images/user_avatar.png' alt={user?.fullName || 'User'} className="w-full h-full object-cover" />
           </div>
           <h1 className="mt-4 text-3xl font-bold text-[#2D3436] dark:text-white">
             {user?.fullName || 'Unknown User'}
@@ -169,6 +140,19 @@ const UserProfile = () => {
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">Email Address</p>
                 <p className="font-medium text-[#2D3436] dark:text-gray-200">{user?.email || '—'}</p>
+              </div>
+            </div>
+
+            {/* Member Since */}
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-[#EDF6F9] dark:bg-gray-700 text-[#006D77] dark:text-teal-400 rounded-full transition-colors duration-300">
+                <FaRegClock className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Member Since</p>
+                <p className="font-medium text-[#2D3436] dark:text-gray-200">
+                  {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '—'}
+                </p>
               </div>
             </div>
           </div>
