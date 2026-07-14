@@ -49,7 +49,7 @@ const handleLogin = async (e) => {
     if (newErrors.email || newErrors.password) return;
     try {
 const response = await fetch(
-  `${import.meta.env.VITE_CATS}/auth/login`,
+  `${import.meta.env.VITE_CATS}/api/auth/login`,
   {
     method: "POST",
     headers: {
@@ -64,7 +64,11 @@ const response = await fetch(
   login(data.user, data.token);
 
   alert("Login Successful");
+  if (data.user.role === "admin") {
+  navigate("/dashboard");
+} else {
   navigate("/");
+}
 } else {
     alert(data.message);
   }
