@@ -1,16 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardBody,
   Typography,
   Button,
 } from "@material-tailwind/react";
-import { FiUser, FiHome, FiStar, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { FiUser, FiHome, FiStar, FiCheckCircle, FiAlertCircle, FiHeart } from "react-icons/fi";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const AdoptRequest = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { catId } = location.state || {};
+  const [availableCats, setAvailableCats] = useState([]);
+  const [selectedCatId, setSelectedCatId] = useState("");
   const [livingSituation, setLivingSituation] = useState("Rent");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const idFromUrl = params.get("catId");
+    const preselectedId = idFromUrl || catId || "";
+    if (preselectedId) {
+      setSelectedCatId(preselectedId);
+    }
+
+    const url = import.meta.env.VITE_CATS || "http://localhost:3000/api/v1";
+    fetch(`${url}/cats`)
+      .then((res) => res.json())
+      .then((resData) => {
+        const cats = resData?.data?.cats || [];
+        const adoptable = cats.filter(
+          (cat) => !cat.status || cat.status.toLowerCase() === "available"
+        );
+        setAvailableCats(adoptable.length ? adoptable : cats);
+      })
+      .catch((err) => console.error("Error fetching cats:", err));
+  }, [catId]);
 
   // Form Field States
   const [fullName, setFullName] = useState("");
@@ -25,8 +50,15 @@ const AdoptRequest = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  const selectedCat = availableCats.find(
+    (cat) => String(cat._id || cat.id) === String(selectedCatId)
+  );
+
   const validateForm = () => {
     const tempErrors = {};
+    if (!selectedCatId) {
+      tempErrors.selectedCatId = "Please select a cat to adopt.";
+    }
     if (!fullName.trim()) {
       tempErrors.fullName = "Full Name is required.";
     } else if (fullName.trim().length < 3) {
@@ -65,12 +97,25 @@ const AdoptRequest = () => {
 
     setIsSubmitting(true);
     try {
-      // Simulate API submit latency
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const url = import.meta.env.VITE_CATS || "http://localhost:3000/api/v1";
+
+      const response = await fetch(`${url}/cats/${selectedCatId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: "pending" }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.message || "Failed to submit adoption request.");
+      }
+
       setSubmitSuccess(true);
     } catch (err) {
       console.error(err);
-      setErrors({ submit: "Failed to submit request. Please try again later." });
+      setErrors({ submit: err.message || "Failed to submit request. Please try again later." });
     } finally {
       setIsSubmitting(false);
     }
@@ -142,8 +187,11 @@ const AdoptRequest = () => {
 
           <div className="w-64 h-64 md:w-80 md:h-80 rounded-[32px] overflow-hidden shadow-2xl shadow-teal-900/20 flex-shrink-0">
             <img
-              src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-              alt="Cat"
+              src={
+                selectedCat?.image ||
+                "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              }
+              alt={selectedCat?.name || "Cat"}
               className="w-full h-full object-cover"
             />
           </div>
@@ -168,12 +216,20 @@ const AdoptRequest = () => {
                       1
                     </div>
                     <Typography className="font-semibold text-gray-800 dark:text-gray-200">
+                      Choose a Cat
+                    </Typography>
+                  </li>
+                  <li className="flex items-center gap-4">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all ${selectedCatId ? "bg-teal-50 border-teal-500 text-teal-600" : "bg-transparent border-gray-300 dark:border-gray-700 text-gray-400 dark:text-gray-500"}`}>
+                      2
+                    </div>
+                    <Typography className={`font-medium transition-all ${selectedCatId ? "text-teal-600 font-semibold" : "text-gray-500 dark:text-gray-400"}`}>
                       Personal Details
                     </Typography>
                   </li>
                   <li className="flex items-center gap-4">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all ${fullName && email && phone ? "bg-teal-50 border-teal-500 text-teal-600" : "bg-transparent border-gray-300 dark:border-gray-700 text-gray-400 dark:text-gray-500"}`}>
-                      2
+                      3
                     </div>
                     <Typography className={`font-medium transition-all ${fullName && email && phone ? "text-teal-600 font-semibold" : "text-gray-500 dark:text-gray-400"}`}>
                       Living Situation
@@ -181,7 +237,7 @@ const AdoptRequest = () => {
                   </li>
                   <li className="flex items-center gap-4">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all ${aboutYourself.trim().length >= 20 ? "bg-teal-50 border-teal-500 text-teal-600" : "bg-transparent border-gray-300 dark:border-gray-700 text-gray-400 dark:text-gray-500"}`}>
-                      3
+                      4
                     </div>
                     <Typography className={`font-medium transition-all ${aboutYourself.trim().length >= 20 ? "text-teal-600 font-semibold" : "text-gray-500 dark:text-gray-400"}`}>
                       Pet Experience
@@ -189,7 +245,7 @@ const AdoptRequest = () => {
                   </li>
                   <li className="flex items-center gap-4">
                     <div className="w-8 h-8 rounded-full bg-transparent border-2 border-gray-300 dark:border-gray-700 text-gray-400 dark:text-gray-500 flex items-center justify-center font-bold text-sm">
-                      4
+                      5
                     </div>
                     <Typography className="font-medium text-gray-500 dark:text-gray-400">
                       Submission
@@ -217,7 +273,61 @@ const AdoptRequest = () => {
 
           {/* Right Forms */}
           <div className="lg:col-span-8 flex flex-col gap-6">
-            {/* Step 1: Personal Details */}
+            {/* Step 1: Choose a Cat */}
+            <Card className="bg-[#f1f5f9] dark:bg-gray-800/40 shadow-none border-none rounded-3xl transition-colors duration-300">
+              <CardBody className="p-8">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-teal-600 dark:text-teal-400 shadow-sm border border-transparent dark:border-gray-850">
+                    <FiHeart className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <Typography
+                      variant="h5"
+                      className="text-gray-900 dark:text-white font-bold"
+                    >
+                      Choose a Cat
+                    </Typography>
+                    <Typography variant="small" className="text-gray-500 dark:text-gray-400">
+                      Select the cat you want to adopt
+                    </Typography>
+                  </div>
+                </div>
+
+                <div>
+                  <Typography
+                    variant="small"
+                    className="text-gray-600 dark:text-gray-400 font-semibold text-xs uppercase tracking-wider mb-2"
+                  >
+                    Available Cats
+                  </Typography>
+                  <select
+                    value={selectedCatId}
+                    onChange={(e) => {
+                      setSelectedCatId(e.target.value);
+                      if (errors.selectedCatId) {
+                        setErrors((prev) => ({ ...prev, selectedCatId: null }));
+                      }
+                    }}
+                    className={`w-full bg-[#e2e8f0] dark:bg-gray-900 border rounded-xl px-4 py-3 text-gray-800 dark:text-gray-200 focus:ring-2 outline-none appearance-none font-medium transition-colors duration-300 ${errors.selectedCatId ? "border-red-500 focus:ring-red-500/50 bg-red-50/20" : "border-transparent focus:ring-teal-500"}`}
+                  >
+                    <option value="">Select a cat...</option>
+                    {availableCats.map((cat) => (
+                      <option key={cat._id || cat.id} value={cat._id || cat.id}>
+                        {cat.name}
+                        {cat.breed ? ` — ${cat.breed}` : ""}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.selectedCatId && (
+                    <span className="text-red-500 text-xs font-semibold flex items-center gap-1 mt-1">
+                      <FiAlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.selectedCatId}
+                    </span>
+                  )}
+                </div>
+              </CardBody>
+            </Card>
+
+            {/* Step 2: Personal Details */}
             <Card className="bg-[#f1f5f9] dark:bg-gray-800/40 shadow-none border-none rounded-3xl transition-colors duration-300">
               <CardBody className="p-8">
                 <div className="flex items-center gap-3 mb-8">

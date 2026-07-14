@@ -1,9 +1,11 @@
 import { FaUserCircle, FaSun, FaMoon, FaEnvelope, FaLock, FaGoogle, FaApple } from "react-icons/fa";
 import { useNavigate, Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -46,26 +48,28 @@ const handleLogin = async (e) => {
     setErrors(newErrors);
     if (newErrors.email || newErrors.password) return;
     try {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+const response = await fetch(
+  `${import.meta.env.VITE_CATS}/api/auth/login`,
+  {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
+    body: JSON.stringify({ email, password }),
   });
 
   const data = await response.json();
 
   if (response.ok) {
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
+  login(data.user, data.token);
 
   alert("Login Successful");
+  if (data.user.role === "admin") {
+  navigate("/dashboard");
+} else {
   navigate("/");
-  } else {
+}
+} else {
     alert(data.message);
   }
 } catch (error) {
